@@ -12,13 +12,14 @@ namespace PizzaShopWebService.Data
         public PizzaShopDbContext (DbContextOptions<PizzaShopDbContext> options)
             : base(options)
         {
-            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>().ToTable("Customer").HasKey(customer=> new { customer.PhoneNumber });
-            modelBuilder.Entity<Transaction>().ToTable("Transaction").HasKey(transaction => new { transaction.CustomerPhoneNumber });
+            modelBuilder.Entity<Customer>()
+                .HasKey(customer => customer.PhoneNumber);
+            modelBuilder.Entity<Transaction>()
+                .HasKey(transaction => transaction.TransactionID);
         }
     }
 }
