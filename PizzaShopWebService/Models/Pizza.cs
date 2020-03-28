@@ -7,6 +7,7 @@ namespace PizzaShopWebService.Models
 {
     public enum PizzaSize
     {
+        Slice,
         Small,
         Medium,
         Large,
@@ -25,8 +26,8 @@ namespace PizzaShopWebService.Models
 
     public enum PizzaExtras
     {
-        ExtraCheese,
         ExtraSause,
+        ExtraCheese,
         StuffedCrust,
     }
 

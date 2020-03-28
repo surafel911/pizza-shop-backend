@@ -20,6 +20,8 @@ namespace PizzaShopWebService.Data
                 .HasKey(customer => customer.PhoneNumber);
             modelBuilder.Entity<Transaction>()
                 .HasKey(transaction => transaction.TransactionID);
+            modelBuilder.Entity<Manager>()
+                .HasKey(manager => manager.PhoneNumber);
         }
     }
 }

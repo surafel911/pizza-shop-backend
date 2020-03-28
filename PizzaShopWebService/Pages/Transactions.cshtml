@@ -1,0 +1,179 @@
+﻿@page
+@model TransactionsModel
+
+
+
+
+
+<div class="row">
+
+    <header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h3>
+            transactions
+        </h3>
+    </header>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+        <h4>
+            Search transactions by phone number
+        </h4>
+        <input type="text" name="ContactName" value="" placeholder="(555) 55 5555" style="width:80%" />
+        <input type="submit" value="search" class="submit" style="width:19%" />
+        <hr />
+        <table style="width:100%; text-align:center">
+            <thead style="font-weight:bold; background-color:lightgray">
+                <tr>
+
+                    <td>
+                        <h4>
+                            Transaction Id
+                        </h4>
+                    </td>
+                    <td>
+                        <h4>Name</h4>
+                    </td>
+                    <td>
+                        <h4>address</h4>
+                    </td>
+                    <td>
+                        <h4>Phone number</h4>
+                    </td>
+
+                    <td>
+                        <h4>Date</h4>
+                    </td>
+                    <td>
+                        <h4>PaymentType</h4>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model.ReturnAllTransaction())
+                {
+                <tr style="height:50px; border-bottom:1px solid lightgray; font-weight:normal">
+
+                    <td> <h5>
+    @r.TransactionID
+</h5></td>
+                    <td> <h5>
+    @r.Customer.Name
+</h5></td>
+                    <td>
+                        <h5>  @r.Customer.Address</h5>
+                  </td>
+                    <td>
+                        <h5>
+                            @r.CustomerPhoneNumber
+                        </h5>
+                    </td>
+
+                    <td>
+                        <h5> @r.Date</h5>
+                       
+                    </td>
+                    <td>
+                        <h5> @r.PaymentType</h5>
+                       
+                    </td>
+
+
+                </tr>
+
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+
+</div>
+
+<style>
+    .row {
+        margin: 0%;
+        padding: 0%;
+        height: 650px;
+        width: 100%;
+        border: 1px solid lightgray;
+        margin-top: 150px;
+        background-color: white;
+        /*-moz-box-shadow: 2px 2px 2px 2px darkblue;
+        -webkit-box-shadow: 2px 2px 2px 2px darkblue;
+        box-shadow: 0px 0px 10px 0px gray;*/
+    }
+
+    header {
+        height: 60px;
+        border-bottom: 1px solid lightgray;
+        background-color: #febc11;
+        font-weight: bold;
+    }
+
+    footer {
+        height: 60px;
+        border-top: 1px solid lightgray;
+    }
+
+        footer h3 {
+            float: right;
+            margin-right: 40px;
+        }
+
+    h3 {
+        text-align: center;
+        text-transform: capitalize;
+    }
+
+    .row div {
+        margin: 0%;
+        /*border: 1px solid lightgray;*/
+        vertical-align: central;
+        display: inline-block;
+        padding: 5%;
+    }
+
+    input {
+        height: 50px;
+        width: 100%;
+        padding-left: 5%;
+        padding-right: 5%;
+        border: 1px solid lightgray;
+    }
+
+    form {
+        padding: 0%;
+        width: 100%;
+    }
+
+    .submit {
+        background-color: black;
+        color: #febc11;
+        font-weight: bold;
+        width: 49%;
+        margin: 0%;
+        display: inline;
+    }
+
+    #formCheck input {
+        width: 100%;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+    td{
+        text-align:left;
+    }
+    h5{
+        text-transform:capitalize;
+        font-weight:bold;
+    }
+</style>
+

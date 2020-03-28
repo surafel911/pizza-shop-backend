@@ -54,7 +54,6 @@ namespace PizzaShopWebService
 
                         pizzaShopDbContext.Database.Migrate();
                     }
-
                 } catch (Exception e) {
                     throw e;
                 }

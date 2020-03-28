@@ -1,11 +1,11 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PizzaShopWebService.Models
 {
-    public class Customer
+    public class Manager
     {
+
         [Required]
         [DataType(DataType.PhoneNumber)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -14,19 +14,8 @@ namespace PizzaShopWebService.Models
         [Required]
         [DataType(DataType.Password)]
         public string Password;
-
+        
         [Required]
         public string Name { get; set; }
-
-        [Required]
-        public string Address { get; set; }
-
-        [Required]
-        public PaymentType PaymentType { get; set; }
-
-        public string AddressDetails { get; set; }
-
-        // Navagation properties
-        public ICollection<Transaction> Transactions { get; set; }
     }
 }

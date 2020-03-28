@@ -1,0 +1,220 @@
+﻿@page
+@model ContactModel
+
+
+<div class="row">
+
+
+    <header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h3>
+            order detail
+        </h3>
+    </header>
+
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div style="border:1px solid lightgray;width:100%">
+          
+
+            <table style="width:100%">
+                <tr>
+                    <td style="width:80%; text-align:left">
+                        <h4>
+                            Ex -Large - Beff
+                        </h4>
+
+                    </td>
+                    <td>
+                        <h3>
+                            $18.99
+                        </h3>
+                       
+                    </td>
+
+
+                </tr>
+
+
+            </table>
+            <table style="width:100%">
+                <tr>
+                    <td style="width:80%; text-align:left">
+                        <h4>
+                            Md-  cheese pizza
+                        </h4>
+
+                    </td>
+                    <td>
+                        <h3>
+                            $14.99
+                        </h3>
+                    </td>
+
+
+                </tr>
+
+
+            </table>
+            <hr />
+            <table style="width:100%">
+                <tr>
+                    <td style="width:80%; text-align:left">
+                        <h4>
+                            delivery charges
+                        </h4>
+
+                    </td>
+                    <td>
+                        <h3>
+                            $ 8.00
+                        </h3>
+                    </td>
+
+
+                </tr>
+
+
+            </table>
+
+            <hr />
+
+            <table style="width:100%">
+                <tr>
+                    <td style="width:80%; text-align:left">
+                        <h4>
+                            Grand total
+                        </h4>
+
+                    </td>
+                    <td>
+                        <h3>
+                            $ 46.59
+                        </h3>
+                    </td>
+
+
+                </tr>
+
+
+            </table>
+            <hr />
+
+
+            <table style="width:100%">
+                <tr>
+                    <td style="width:80%; text-align:left">
+                        <h4>
+                            delivering address
+                        </h4>
+                        <p>
+                            44xx peachtree RD
+                            Atlant GA<br />
+                            APT #XXXX
+                        </p>
+                    </td>
+                    <td>
+                        <img src="https://firebasestorage.googleapis.com/v0/b/testhouse-ff733.appspot.com/o/ra0m2bw5kp?alt=media" />
+
+                    </td>
+
+
+                </tr>
+
+
+            </table>
+        </div>
+
+
+
+
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:center; top:80px;  vertical-align:central">
+        <form id="formCheck" method="post" style="margin-top:20%;">
+            <input type="submit" asp-page="/PaymentOptions" value="continue" class="submit" style="width:59%" /> <br /> 
+            <input type="submit" asp-page="/PaymentOptions" value="back" class="submit" style="width:59%" /> <br /> <br />
+
+
+        </form>
+    </div>
+  
+
+
+
+
+
+
+
+
+</div>
+
+<style>
+    .row {
+        margin: 0%;
+        padding: 0%;
+        height: 650px;
+        width: 100%;
+        border: 1px solid lightgray;
+        margin-top: 150px;
+        background-color: white;
+        text-transform:capitalize;
+    }
+
+    header {
+        height: 60px;
+        border-bottom: 1px solid lightgray;
+        /*background-color: #febc11;*/
+        font-weight: bold;
+    }
+
+
+
+    h3 {
+        text-align: center;
+        text-transform: capitalize;
+    }
+
+    .row div {
+        margin: 0%;
+        /*border: 1px solid lightgray;*/
+        vertical-align: central;
+        display: inline-block;
+        padding: 5%;
+    }
+
+    input {
+        height: 50px;
+        width: 100%;
+        padding-left: 5%;
+        padding-right: 5%;
+        border: 1px solid lightgray;
+    }
+
+    form {
+        padding: 0%;
+        width: 100%;
+    }
+
+    .submit {
+        background-color: black;
+        color: #febc11;
+        font-weight: bold;
+        width: 49%;
+        margin: 0%;
+        display: inline;
+    }
+
+    #formCheck input {
+        width: 100%;
+    }
+
+    h4 {
+        text-transform: uppercase;
+    }
+
+    img {
+        height: 80px;
+    }
+
+    tr {
+    }
+</style>

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 
-using PizzaShopWebService.Data;
+using PizzaShopWebService.Models;
 
 namespace PizzaShopWebService
 {
@@ -16,6 +16,13 @@ namespace PizzaShopWebService
     {
         public static void Main(string[] args)
         {
+            /*
+                How to enumerate an enum
+                foreach (string v in Enum.GetNames(typeof(PizzaSize))) {
+                    Console.WriteLine(v);
+                }
+            */
+
              CreateHostBuilder(args).Build().Run();
         }
 
