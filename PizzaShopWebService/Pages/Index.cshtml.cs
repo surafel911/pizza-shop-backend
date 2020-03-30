@@ -4,18 +4,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.DependencyInjection;
 
-using PizzaShopWebService.Models;
+using PizzaShopWebService.Services;
 
 namespace PizzaShopWebService.Pages
 {
     public class IndexModel : PageModel
     {
-        public string Message { get; set; }
-        public List<Menu> menulist { get; set; }
-        public void OnGet()
-        {
-            menulist = Menu.ReturnAll();
-        }
+		private readonly IPizzaShopSeedDataLoader _pizzaShopSeedDataLoader;
+
+		public ICollection<string> PizzaIconURLs 
+		{ 
+			get 
+			{
+				return _pizzaShopSeedDataLoader.SeedData.PizzaIconURLs; 
+			}
+
+			private set
+			{
+			}
+		}
+		
+		public IndexModel(IPizzaShopSeedDataLoader pizzaShopSeedDataLoader)
+		{
+			_pizzaShopSeedDataLoader = pizzaShopSeedDataLoader;
+		}
     }
 }

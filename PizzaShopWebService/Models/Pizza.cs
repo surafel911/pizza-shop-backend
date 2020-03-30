@@ -7,7 +7,6 @@ namespace PizzaShopWebService.Models
 {
     public enum PizzaSize
     {
-        Slice,
         Small,
         Medium,
         Large,
@@ -22,10 +21,13 @@ namespace PizzaShopWebService.Models
         Sausage,
         Spinach,
         Mushrooms,
+		Pepperoni,
+		Peppers,
     }
 
     public enum PizzaExtras
     {
+		GlutenFree,
         ExtraSause,
         ExtraCheese,
         StuffedCrust,

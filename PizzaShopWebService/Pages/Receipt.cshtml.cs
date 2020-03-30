@@ -4,15 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+using PizzaShopWebService.Models;
+
 namespace PizzaShopWebService.Pages
 {
-    public class ReceptModel : PageModel
+    public class ReceiptModel : PageModel
     {
-        public string Message { get; set; }
+		public Transaction Transaction { get; set; }
 
         public void OnGet()
         {
-            Message = "Geenerate Recipt";
+			
         }
     }
 }

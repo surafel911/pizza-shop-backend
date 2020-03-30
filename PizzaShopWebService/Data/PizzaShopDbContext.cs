@@ -4,7 +4,7 @@ using PizzaShopWebService.Models;
 
 namespace PizzaShopWebService.Data
 {
-    internal class PizzaShopDbContext : DbContext
+    public class PizzaShopDbContext : DbContext
     {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
