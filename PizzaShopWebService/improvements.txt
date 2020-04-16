@@ -1,0 +1,8 @@
+Sessions and temp data: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state?view=aspnetcore-3.1
+	TempData can be used for messages for a failed login or added user
+
+Deploy ASP.NET using Docker: https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/?view=aspnetcore-3.1
+
+Authentication and Authorizaton: https://docs.microsoft.com/en-us/aspnet/core/security/?view=aspnetcore-3.1
+
+Have items/prices available as JSON seed data for DB?
