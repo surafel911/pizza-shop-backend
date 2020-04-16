@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -16,13 +15,6 @@ namespace PizzaShopWebService
 	{
 		public static void Main(string[] args)
 		{
-			/*
-				How to enumerate an enum
-				foreach (string v in Enum.GetNames(typeof(PizzaSize))) {
-					Console.WriteLine(v);
-				}
-			*/
-
 			CreateHostBuilder(args).Build().Run();
 		}
 
