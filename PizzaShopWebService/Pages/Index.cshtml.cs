@@ -10,9 +10,9 @@ namespace PizzaShopWebService.Pages
     {
 		public ICollection<string> HomepagePizzaIconURLs { get; private set; }
 		
-		public IndexModel(IPizzaShopConfigDataLoader pizzaShopSeedDataLoader)
+		public IndexModel(IPizzaShopConfigDataLoader pizzaShopConfigDataLoader)
 		{
-			HomepagePizzaIconURLs = pizzaShopSeedDataLoader.SeedData.HomepagePizzaIconURLs;
+			HomepagePizzaIconURLs = pizzaShopConfigDataLoader.SeedData.HomepagePizzaIconURLs;
 		}
     }
 }
