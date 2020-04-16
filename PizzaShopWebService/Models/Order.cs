@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,55 +6,51 @@ namespace PizzaShopWebService.Models
     public class Order
     {
         [DataType(DataType.Currency)]
-        public double Total { get; private set; }
+        public decimal Total { get; set; }
 
-        public ICollection<Pizza> Pizzas
+		public ICollection<Drink> Drinks { get; set; }
+
+		public ICollection<Pizza> Pizzas { get; set; }
+
+		public Order()
 		{
-			get
-			{
-				return Pizzas;
-			}
-			
-			set
-			{
-				Pizzas = value;
-				CalculatePrice();
-			}
+			Drinks = new List<Drink>();
+			Pizzas = new List<Pizza>();
 		}
 
-        public ICollection<Drink> Drinks
+		public void CalculateTotalPrice()
 		{
-			get
-			{
-				return Drinks;
-			}
-			
-			set
-			{
-				Drinks = value;
-				CalculatePrice();
-			}
-		}
-
-		public void CalculatePrice()
-		{
-			Total = 0.0;
+			Total = 0;
 
 			foreach (Pizza pizza in Pizzas) {
-				Total += 6.0 + 3 * (int)pizza.Size;
-
-				foreach (PizzaExtras extra in pizza.Extras) {
-					Total += 0.75;
-				}
-
-				foreach (PizzaTopping topping in pizza.Toppings) {
-					Total += 0.75;
-				}
+				Total += CalculatePizzaPrice(pizza);
 			}
 
 			foreach (Drink drink in Drinks) {
-				Total += 1.5;
+				Total += CalculateDrinkPrice(drink);
 			}
+		}
+
+		public decimal CalculatePizzaPrice(Pizza pizza)
+		{
+			decimal Total = (decimal)(6.0 + 3 * (int)pizza.Size);
+
+			Total += (decimal)(pizza.Crust != PizzaCrust.Original ? 1 : 0);
+
+			foreach (PizzaExtra extra in pizza.Extras) {
+				Total += (decimal)0.75;
+			}
+
+			foreach (PizzaTopping topping in pizza.Toppings) {
+				Total += (decimal)0.75;
+			}
+
+			return Total;
+		}
+
+		public decimal CalculateDrinkPrice(Drink drink)
+		{
+			return 1 + (int)drink.Size;
 		}
     }
 }

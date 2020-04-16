@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace PizzaShopWebService.Models
 {
     public enum DrinkSize
@@ -6,14 +8,17 @@ namespace PizzaShopWebService.Models
         Medium,
         Large,
         Liter,
-        TwoLiter,
     }
 
     public enum DrinkType
     {
-        Coke,
-        Pepsi,
-        DoctorPepper,
+		Coke,
+		Pepsi,
+		Sprite,
+		[Display(Name = "Dr. Pepper")]
+		DrPepper,
+		[Display(Name = "Sweet Tea")]
+		SweetTea,
     }
 
     public class Drink
