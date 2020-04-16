@@ -4,32 +4,32 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PizzaShopWebService.Models
 {
-    public class Customer
+    public class Customer : IAccount
     {
-        [Required]
+		[Required]
+		[Phone]
 		[Display(Name = "Phone Number")]
-        [DataType(DataType.PhoneNumber)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string PhoneNumber { get; set; }
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
+		public string PhoneNumber { get; set; }
 
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password;
+		[Required]
+		[DataType(DataType.Password)]
+		public string Password { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+		[Required]
+		public string Name { get; set; }
 
-        [Required]
-        public string Address { get; set; }
+		[Required]
+		public string Address { get; set; }
 
-        [Required]
+		[Required]
 		[Display(Name = "Prefered Payment Method")]
-        public PaymentType PaymentType { get; set; }
+		public PaymentType PaymentType { get; set; }
 
 		[Display(Name = "Address Details")]
-        public string AddressDetails { get; set; }
+		public string AddressDetails { get; set; }
 
-        // Navagation properties
-        public ICollection<Transaction> Transactions { get; set; }
+		// Navagation properties
+		public ICollection<Transaction> Transactions { get; set; }
     }
 }

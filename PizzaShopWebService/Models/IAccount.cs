@@ -3,19 +3,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PizzaShopWebService.Models
 {
-	public class Manager : IAccount
+	public interface IAccount
 	{
-
 		[Required]
 		[Phone]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
-		public string PhoneNumber { get; set; }
+		string PhoneNumber { get; set; }
 
 		[Required]
 		[DataType(DataType.Password)]
-		public string Password { get; set; }
-		
+		string Password { get; set; }
+
 		[Required]
-		public string Name { get; set; }
+		string Name { get; set; }
 	}
 }
