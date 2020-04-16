@@ -4,12 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PizzaShopWebService.Models
 {
-	public enum RetrievalType
-	{
-		Carryout,
-		Delivery,
-	}
-
 	public class Transaction
 	{
 		[Required]

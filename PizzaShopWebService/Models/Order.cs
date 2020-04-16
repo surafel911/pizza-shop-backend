@@ -7,6 +7,8 @@ namespace PizzaShopWebService.Models
     {
         [DataType(DataType.Currency)]
         public decimal Total { get; set; }
+		
+		public RetrievalType RetrievalType { get; set; }
 
 		public ICollection<Drink> Drinks { get; set; }
 

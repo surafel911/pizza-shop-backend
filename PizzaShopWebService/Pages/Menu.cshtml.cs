@@ -22,9 +22,6 @@ namespace PizzaShopWebService.Pages
 		[BindProperty]
 		public Pizza CurrentPizza { get; set; }
 
-		[BindProperty]
-		public RetrievalType RetrievalType { get; set; }
-
 		public string PhoneNumber { get; set; }
 		
 		// TODO: Is a new Model created every time a request is made? Break here and see if constructor is called after post
@@ -39,7 +36,6 @@ namespace PizzaShopWebService.Pages
 		public IActionResult OnGet()
 		{
 			string order;
-			int? retrievalType;
 
 			PhoneNumber = HttpContext.Session.GetString("PhoneNumber");
 			if (string.IsNullOrEmpty(PhoneNumber)) {
@@ -58,9 +54,6 @@ namespace PizzaShopWebService.Pages
 			order = HttpContext.Session.GetString("Order");
 			Order = (order != null ? JsonSerializer.Deserialize<Order>(order) : new Order());
 
-			retrievalType = HttpContext.Session.GetInt32("RetrievalType");
-			RetrievalType = (retrievalType != null ? (RetrievalType)retrievalType.Value : new RetrievalType());
-
 			return Page();
 		}
 
@@ -73,7 +66,6 @@ namespace PizzaShopWebService.Pages
 			Order.CalculateTotalPrice();
 
 			HttpContext.Session.SetString("Order", JsonSerializer.Serialize(Order));
-			HttpContext.Session.SetInt32("RetrievalType", (int)RetrievalType);
 
 			return RedirectToPage("/Order");
 
@@ -94,7 +86,6 @@ namespace PizzaShopWebService.Pages
 			Order.CalculateTotalPrice();
 
 			HttpContext.Session.SetString("Order", JsonSerializer.Serialize(Order));
-			HttpContext.Session.SetInt32("RetrievalType", (int)RetrievalType);
 
 			return RedirectToPage("/Menu");
 		}
@@ -114,7 +105,6 @@ namespace PizzaShopWebService.Pages
 			Order.CalculateTotalPrice();
 
 			HttpContext.Session.SetString("Order", JsonSerializer.Serialize(Order));
-			HttpContext.Session.SetInt32("RetrievalType", (int)RetrievalType);
 
 			return RedirectToPage("/Menu");
 		}
