@@ -1,18 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-using Microsoft.AspNetCore.Session;
-
-using Npgsql;
 using Microsoft.EntityFrameworkCore;
 
 using PizzaShopWebService.Data;
@@ -35,8 +27,10 @@ namespace PizzaShopWebService
 		{
 			services.AddRazorPages();
 
-			services.AddDbContext<PizzaShopDbContext>(options =>
-				options.UseNpgsql(Configuration.GetConnectionString("PizzaShopDbConnection")));
+			services.AddDbContext<PizzaShopDbContext>(options => 
+			{
+				options.UseInMemoryDatabase("pizzashopdb");
+			});
 
 			services.AddScoped<IPizzaShopDbHandler, PizzaShopDbHandler>();
 
@@ -55,34 +49,30 @@ namespace PizzaShopWebService
 			using (PizzaShopDbContext pizzaShopDbContext = app.ApplicationServices.CreateScope()
 				.ServiceProvider.GetRequiredService<PizzaShopDbContext>()) {
 
-				try {
-					if (env.IsDevelopment()) {
-						app.UseDeveloperExceptionPage();
+				if (env.IsDevelopment()) {
+					app.UseDeveloperExceptionPage();
 
-						pizzaShopDbContext.Database.EnsureDeleted();
-						pizzaShopDbContext.Database.EnsureCreated();
+					pizzaShopDbContext.Database.EnsureDeleted();
+					pizzaShopDbContext.Database.EnsureCreated();
 
-						pizzaShopDbContext.Add(new Customer
-						{
-							PhoneNumber = "1111111111",
-							Password = "password",
-							Name = "Surafel Assefa",
-							Address = "White House",
-							PaymentType = PaymentType.VisaCard,
-						});
-						pizzaShopDbContext.SaveChanges();
-					}
-					else
+					pizzaShopDbContext.Add(new Customer
 					{
-						app.UseExceptionHandler("/Error");
+						PhoneNumber = "1111111111",
+						Password = "password",
+						Name = "Surafel Assefa",
+						Address = "White House",
+						PaymentType = PaymentType.VisaCard,
+					});
+					pizzaShopDbContext.SaveChanges();
+				}
+				else
+				{
+					app.UseExceptionHandler("/Error");
 
-						// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-						app.UseHsts();
+					// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+					app.UseHsts();
 
-						pizzaShopDbContext.Database.Migrate();
-					}
-				} catch (PostgresException e) {
-					throw e;
+					pizzaShopDbContext.Database.Migrate();
 				}
 			}
 
