@@ -127,16 +127,15 @@
 				<input type="submit" asp-page-handler="AddDrink" value="Add Drink" class="submit" style="width:59%" /> <br /> <br />
 			</form>
 
-			<div class="otherService col-lg-4 col-md-4 col-sm-12 col-x	s-12" style="text-align:left; padding:0%;">
+			<div class="otherService col-lg-4 col-md-4 col-sm-12 col-x	s-12" style="text-align:left; padding:0%;">				
 				<form method="post">
-					<select asp-for="Order.RetrievalType" asp-items="Html.GetEnumSelectList<RetrievalType>()"></select>
-
 					<ul id="menuTops">
 						<li>
 							<input type="submit" asp-page-handler="RestartOrder" value="Restart Order" class="submit" style="width:59%" /> <br /> <br />
 						</li>
+						
 						<li>
-							<input type="submit" asp-page="/Order" value="Continue" class="submit" style="width:100%" /> <br /> <br />
+							<input type="submit" asp-page="/Menu" value="Continue" class="submit" style="width:100%" /> <br /> <br />
 						</li>
 					</ul>
 				</form>

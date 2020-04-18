@@ -5,6 +5,10 @@ namespace PizzaShopWebService.Models
 {
     public class Order
     {
+		private static readonly decimal deliveryFee = 4;
+
+		public decimal DeliveryFee { get { return deliveryFee; } }
+
         [DataType(DataType.Currency)]
         public decimal Total { get; set; }
 		
@@ -22,7 +26,7 @@ namespace PizzaShopWebService.Models
 
 		public void CalculateTotalPrice()
 		{
-			Total = 0;
+			Total = CalculateDeliveryPrice();
 
 			foreach (Pizza pizza in Pizzas) {
 				Total += CalculatePizzaPrice(pizza);
@@ -53,6 +57,11 @@ namespace PizzaShopWebService.Models
 		public decimal CalculateDrinkPrice(Drink drink)
 		{
 			return 1 + (int)drink.Size;
+		}
+
+		public decimal CalculateDeliveryPrice()
+		{
+			return (decimal)(RetrievalType == RetrievalType.Carryout ? 0 : DeliveryFee);
 		}
     }
 }

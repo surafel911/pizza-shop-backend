@@ -59,16 +59,20 @@ namespace PizzaShopWebService.Pages
 
 		public IActionResult OnPost()
 		{
+			string order;
+
 			if (!ModelState.IsValid) {
 				return Page();
 			}
 
-			Order.CalculateTotalPrice();
+			order = HttpContext.Session.GetString("Order");
+			Order = (order != null ? JsonSerializer.Deserialize<Order>(order) : new Order());
 
-			HttpContext.Session.SetString("Order", JsonSerializer.Serialize(Order));
+			if (Order.Drinks.Count == 0 || Order.Pizzas.Count == 0) {
+				return Page();
+			}
 
 			return RedirectToPage("/Order");
-
 		}
 
 		public IActionResult OnPostAddPizza()

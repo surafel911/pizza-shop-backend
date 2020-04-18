@@ -1,220 +1,201 @@
 ﻿@page
-@model ContactModel
-
+@model OrderModel
+@using PizzaShopWebService.Models
 
 <div class="row">
+	<header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<h3> Order </h3>
+	</header>
 
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+		<div style="border:1px solid lightgray;width:100%">
+			<h3> @Model.Customer.Name </h3>
 
-    <header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <h3>
-            order detail
-        </h3>
-    </header>
+			<table style="width:100%">
+				@foreach (Pizza pizza in @Model.Order.Pizzas) {
+					<thead>
+						<tr>
+							<td style="width:80%; text-align:left">
+								<h4> @pizza.Size Pizza </h4>
+							</td>
+							<td style="width:20%; text-align:right;">
+								<h4> $@Model.Order.CalculatePizzaPrice(pizza) </h4>
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="text-align:left">
+								<p> @pizza.Crust Crust </p>
+							</td>
+						</tr>
 
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <div style="border:1px solid lightgray;width:100%">
-          
+						@foreach (PizzaTopping topping in @pizza.Toppings){
+							<tr>
+								<td style="text-align:left">
+									<p> @topping </p>
+								</td>
+							</tr>
+						}
 
-            <table style="width:100%">
-                <tr>
-                    <td style="width:80%; text-align:left">
-                        <h4>
-                            Ex -Large - Beff
-                        </h4>
+						@foreach (PizzaExtra extra in @pizza.Extras) {
+							<tr>
+								<td style="text-align:left">
+									<p> @extra </p>
+								</td>
+							</tr>
+						}
+					</tbody>
+				}
 
-                    </td>
-                    <td>
-                        <h3>
-                            $18.99
-                        </h3>
-                       
-                    </td>
+				@foreach (Drink drink in @Model.Order.Drinks) {
+					<thead>
+						<tr>
+							<td style="width:80%; text-align:left">
+								<h4> @drink.Size @drink.Type </h4>
+							</td>
+							<td style="width:20%; text-align:right;">
+								<h4> $@Model.Order.CalculateDrinkPrice(drink) </h4>
+							</td>
+						</tr>
+					</thead>
+				}
+			</table>
+		
+			<hr />
 
+			<table style="width:100%">
+				<tr>
+					<td style="width:80%; text-align:left">
+						<h4> Total </h4>
+					</td>
+					<td>
+						<h3> $@Model.Order.Total </h3>
+					</td>
+				</tr>
+			</table>
 
-                </tr>
+			<hr />
+			
+			<table style="width:100%">
+				<tr>
+					<td style="width:80%; text-align:left">
+						Delivery Fee
+					</td>
+					<td>
+						$@Model.Order.DeliveryFee
+					</td>
+				</tr>
+				<tr>
+					<td style="width:80%; text-align:left">
+						<h4> Pickup Type </h4>
+					</td>
+					<td>
+						<select asp-for="Order.RetrievalType" asp-items="Html.GetEnumSelectList<RetrievalType>()"></select>
+					</td>
+				</tr>
+			</table>
+			
+			<hr />
 
+			@if (@Model.Order.RetrievalType == RetrievalType.Delivery) {
+				<table style="width:100%">
+					<tr>
+						<td style="width:80%; text-align:left">
+							<h4> Delivering Address </h4>
+							<p>
+								@Model.Customer.Address
+								<br />
+								@Model.Customer.AddressDetails
+							</p>
+						</td>
+						<td>
+							<img src="https://firebasestorage.googleapis.com/v0/b/testhouse-ff733.appspot.com/o/ra0m2bw5kp?alt=media" />
+						</td>
+					</tr>
+				</table>
+			}
+		</div>
+	</div>
 
-            </table>
-            <table style="width:100%">
-                <tr>
-                    <td style="width:80%; text-align:left">
-                        <h4>
-                            Md-  cheese pizza
-                        </h4>
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:center; top:80px;  vertical-align:central">
+		<form id="formCheck" method="post" style="margin-top:20%;">
+			<input type="submit" asp-page="/Order" value="Continue" class="submit" style="width:59%" />
+		</form> 
 
-                    </td>
-                    <td>
-                        <h3>
-                            $14.99
-                        </h3>
-                    </td>
+		<br />
 
-
-                </tr>
-
-
-            </table>
-            <hr />
-            <table style="width:100%">
-                <tr>
-                    <td style="width:80%; text-align:left">
-                        <h4>
-                            delivery charges
-                        </h4>
-
-                    </td>
-                    <td>
-                        <h3>
-                            $ 8.00
-                        </h3>
-                    </td>
-
-
-                </tr>
-
-
-            </table>
-
-            <hr />
-
-            <table style="width:100%">
-                <tr>
-                    <td style="width:80%; text-align:left">
-                        <h4>
-                            Grand total
-                        </h4>
-
-                    </td>
-                    <td>
-                        <h3>
-                            $ 46.59
-                        </h3>
-                    </td>
-
-
-                </tr>
-
-
-            </table>
-            <hr />
-
-
-            <table style="width:100%">
-                <tr>
-                    <td style="width:80%; text-align:left">
-                        <h4>
-                            delivering address
-                        </h4>
-                        <p>
-                            44xx peachtree RD
-                            Atlant GA<br />
-                            APT #XXXX
-                        </p>
-                    </td>
-                    <td>
-                        <img src="https://firebasestorage.googleapis.com/v0/b/testhouse-ff733.appspot.com/o/ra0m2bw5kp?alt=media" />
-
-                    </td>
-
-
-                </tr>
-
-
-            </table>
-        </div>
-
-
-
-
-    </div>
-
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:center; top:80px;  vertical-align:central">
-        <form id="formCheck" method="post" style="margin-top:20%;">
-            <input type="submit" asp-page="/PaymentOptions" value="continue" class="submit" style="width:59%" /> <br /> 
-            <input type="submit" asp-page="/PaymentOptions" value="back" class="submit" style="width:59%" /> <br /> <br />
-
-
-        </form>
-    </div>
-  
-
-
-
-
-
-
-
-
+		<form id="formCheck" method="get" style="margin-top:20%;">
+			<input type="submit" asp-page="/Menu" value="Back" class="submit" style="width:59%" />
+		</form> 
+		<br /><br />
+	</div>
 </div>
 
 <style>
-    .row {
-        margin: 0%;
-        padding: 0%;
-        height: 650px;
-        width: 100%;
-        border: 1px solid lightgray;
-        margin-top: 150px;
-        background-color: white;
-        text-transform:capitalize;
-    }
+	.row {
+		margin: 0%;
+		padding: 0%;
+		height: 650px;
+		width: 100%;
+		border: 1px solid lightgray;
+		margin-top: 150px;
+		background-color: white;
+		text-transform:capitalize;
+	}
 
-    header {
-        height: 60px;
-        border-bottom: 1px solid lightgray;
-        /*background-color: #febc11;*/
-        font-weight: bold;
-    }
+	header {
+		height: 60px;
+		border-bottom: 1px solid lightgray;
+		/*background-color: #febc11;*/
+		font-weight: bold;
+	}
 
 
 
-    h3 {
-        text-align: center;
-        text-transform: capitalize;
-    }
+	h3 {
+		text-align: center;
+		text-transform: capitalize;
+	}
 
-    .row div {
-        margin: 0%;
-        /*border: 1px solid lightgray;*/
-        vertical-align: central;
-        display: inline-block;
-        padding: 5%;
-    }
+	.row div {
+		margin: 0%;
+		/*border: 1px solid lightgray;*/
+		vertical-align: central;
+		display: inline-block;
+		padding: 5%;
+	}
 
-    input {
-        height: 50px;
-        width: 100%;
-        padding-left: 5%;
-        padding-right: 5%;
-        border: 1px solid lightgray;
-    }
+	input {
+		height: 50px;
+		width: 100%;
+		padding-left: 5%;
+		padding-right: 5%;
+		border: 1px solid lightgray;
+	}
 
-    form {
-        padding: 0%;
-        width: 100%;
-    }
+	form {
+		padding: 0%;
+		width: 100%;
+	}
 
-    .submit {
-        background-color: black;
-        color: #febc11;
-        font-weight: bold;
-        width: 49%;
-        margin: 0%;
-        display: inline;
-    }
+	.submit {
+		background-color: black;
+		color: #febc11;
+		font-weight: bold;
+		margin: 0%;
+		display: inline;
+	}
 
-    #formCheck input {
-        width: 100%;
-    }
+	#formCheck input {
+		width: 100%;
+	}
 
-    h4 {
-        text-transform: uppercase;
-    }
+	h4 {
+		text-transform: uppercase;
+	}
 
-    img {
-        height: 80px;
-    }
-
-    tr {
-    }
+	img {
+		height: 80px;
+	}
 </style>
