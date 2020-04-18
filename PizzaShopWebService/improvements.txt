@@ -3,6 +3,8 @@ Sessions and temp data: https://docs.microsoft.com/en-us/aspnet/core/fundamental
 
 Deploy ASP.NET using Docker: https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/?view=aspnetcore-3.1
 
+Hosting ASP.NET with Docker over HTTPS: https://docs.microsoft.com/en-us/aspnet/core/security/docker-https?view=aspnetcore-3.1
+
 Authentication and Authorizaton: https://docs.microsoft.com/en-us/aspnet/core/security/?view=aspnetcore-3.1
 
 Have items/prices available as JSON seed data for DB?
