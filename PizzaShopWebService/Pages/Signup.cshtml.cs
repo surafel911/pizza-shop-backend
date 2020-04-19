@@ -32,6 +32,7 @@ namespace PizzaShopWebService.Pages
 			}
 
 			if (_pizzaShopDbHandler.FindManager(Customer.PhoneNumber) != null ||
+				_pizzaShopDbHandler.FindEmployee(Customer.PhoneNumber) != null ||
 				_pizzaShopDbHandler.FindCustomer(Customer.PhoneNumber) != null) {
 				ErrorMessage = "This phone number is registered with another account. Please try a different phone number.";
 				return Page();

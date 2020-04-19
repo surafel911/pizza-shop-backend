@@ -26,8 +26,8 @@ namespace PizzaShopWebService.Pages
 			_pizzaShopDbHandler = pizzaShopDbHandler;
 		}
 
-        public IActionResult OnGet()
-        {
+		public IActionResult OnGet()
+		{
 			string order, PhoneNumber;
 
 			PhoneNumber = HttpContext.Session.GetString("PhoneNumber");

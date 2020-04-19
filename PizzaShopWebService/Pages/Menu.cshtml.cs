@@ -21,8 +21,6 @@ namespace PizzaShopWebService.Pages
 
 		[BindProperty]
 		public Pizza CurrentPizza { get; set; }
-
-		public string PhoneNumber { get; set; }
 		
 		// TODO: Is a new Model created every time a request is made? Break here and see if constructor is called after post
 		public MenuModel(IPizzaShopDbHandler pizzaShopDbHandler)
@@ -35,15 +33,15 @@ namespace PizzaShopWebService.Pages
 
 		public IActionResult OnGet()
 		{
-			string order;
+			string order, phoneNumber;
 
-			PhoneNumber = HttpContext.Session.GetString("PhoneNumber");
-			if (string.IsNullOrEmpty(PhoneNumber)) {
+			phoneNumber = HttpContext.Session.GetString("PhoneNumber");
+			if (string.IsNullOrEmpty(phoneNumber)) {
 				// TODO: Handle this condition better
 				return Content("Login required.");
 			}
 
-			Customer customer = _pizzaShopDbHandler.FindCustomer(PhoneNumber);
+			Customer customer = _pizzaShopDbHandler.FindCustomer(phoneNumber);
 			if (customer == null) {
 				// TODO: Handle this condition better
 				return Content("No customer account in this phone number.");
@@ -120,7 +118,6 @@ namespace PizzaShopWebService.Pages
 			}
 
 			HttpContext.Session.Remove("Order");
-			HttpContext.Session.Remove("RetrievalType");
 
 			return RedirectToPage("/Menu");
 		}
