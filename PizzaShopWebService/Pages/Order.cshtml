@@ -70,7 +70,25 @@
 						<h4> Total </h4>
 					</td>
 					<td>
-						<h3> $@Model.Order.Total </h3>
+						<h5> $@Model.Order.Total </h5>
+					</td>
+				</tr>
+			</table>
+			
+			<hr />
+
+			<table style="width:100%">
+				<tr>
+					<td style="width:80%; text-align:left">
+						<h4> Delivering Address </h4>
+						<p>
+							@Model.Customer.Address
+							<br />
+							@Model.Customer.AddressDetails
+						</p>
+					</td>
+					<td>
+						<img src="https://firebasestorage.googleapis.com/v0/b/testhouse-ff733.appspot.com/o/ra0m2bw5kp?alt=media" />
 					</td>
 				</tr>
 			</table>
@@ -80,10 +98,10 @@
 			<table style="width:100%">
 				<tr>
 					<td style="width:80%; text-align:left">
-						Delivery Fee
+						<h4> Delivery Fee </h4>
 					</td>
 					<td>
-						$@Model.Order.DeliveryFee
+						<h5> $@Model.Order.DeliveryFee </h5>
 					</td>
 				</tr>
 				<tr>
@@ -91,30 +109,13 @@
 						<h4> Pickup Type </h4>
 					</td>
 					<td>
-						<select asp-for="Order.RetrievalType" asp-items="Html.GetEnumSelectList<RetrievalType>()"></select>
+						<div class="form-group">
+							<select asp-for="Order.RetrievalType" asp-items="Html.GetEnumSelectList<RetrievalType>()" class="form-control"></select>
+							<span asp-validation-for="Order.RetrievalType" class="text-danger"></span>
+						</div>
 					</td>
 				</tr>
 			</table>
-			
-			<hr />
-
-			@if (@Model.Order.RetrievalType == RetrievalType.Delivery) {
-				<table style="width:100%">
-					<tr>
-						<td style="width:80%; text-align:left">
-							<h4> Delivering Address </h4>
-							<p>
-								@Model.Customer.Address
-								<br />
-								@Model.Customer.AddressDetails
-							</p>
-						</td>
-						<td>
-							<img src="https://firebasestorage.googleapis.com/v0/b/testhouse-ff733.appspot.com/o/ra0m2bw5kp?alt=media" />
-						</td>
-					</tr>
-				</table>
-			}
 		</div>
 	</div>
 

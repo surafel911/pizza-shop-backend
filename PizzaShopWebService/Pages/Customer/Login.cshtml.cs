@@ -34,7 +34,7 @@ namespace PizzaShopWebService.Pages
 		public IActionResult OnPost()
 		{
 			if (!ModelState.IsValid) {
-     		   return Page();
+     			return Page();
     		}
 
 			Customer customer = _pizzaShopDbHandler.FindCustomer(PhoneNumber);

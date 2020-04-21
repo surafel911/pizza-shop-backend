@@ -65,7 +65,7 @@ namespace PizzaShopWebService.Pages
 
 			HttpContext.Session.SetString("Order", JsonSerializer.Serialize(Order));
 
-			return RedirectToPage("/Receipt");
+			return RedirectToPage("/PaymentOptions");
 		}
     }
 }

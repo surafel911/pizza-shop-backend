@@ -40,7 +40,7 @@ namespace PizzaShopWebService.Pages
 
 			_pizzaShopDbHandler.AddCustomer(Customer);
 
-			return RedirectToPage("/Login");
+			return RedirectToPage("/Customer/Login");
 		}
 	}
 }

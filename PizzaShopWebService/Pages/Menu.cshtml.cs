@@ -41,13 +41,13 @@ namespace PizzaShopWebService.Pages
 				return Content("Login required.");
 			}
 
+			// TODO: Handle conditions for employee and manager accounts.
+
 			Customer customer = _pizzaShopDbHandler.FindCustomer(phoneNumber);
 			if (customer == null) {
 				// TODO: Handle this condition better
 				return Content("No customer account in this phone number.");
 			}
-
-			// TODO: Handle conditions for employee and manager accounts.
 
 			order = HttpContext.Session.GetString("Order");
 			Order = (order != null ? JsonSerializer.Deserialize<Order>(order) : new Order());
@@ -66,7 +66,7 @@ namespace PizzaShopWebService.Pages
 			order = HttpContext.Session.GetString("Order");
 			Order = (order != null ? JsonSerializer.Deserialize<Order>(order) : new Order());
 
-			if (Order.Drinks.Count == 0 || Order.Pizzas.Count == 0) {
+			if (Order.Drinks.Count == 0 && Order.Pizzas.Count == 0) {
 				return Page();
 			}
 

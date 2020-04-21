@@ -5,9 +5,17 @@ namespace PizzaShopWebService.Models
 {
     public class Order
     {
-		private static readonly decimal deliveryFee = 4;
+		[DataType(DataType.Currency)]
+		public decimal DeliveryFee { get { return 4; } }
 
-		public decimal DeliveryFee { get { return deliveryFee; } }
+		[DataType(DataType.Currency)]
+		public decimal PizzaExtraPrice { get { return 1; } }
+
+		[DataType(DataType.Currency)]
+		public decimal PizzaToppingPrice { get { return 0.75M; } }
+
+		[DataType(DataType.Currency)]
+		public decimal PizzaCrustPrice { get { return 1; } }
 
         [DataType(DataType.Currency)]
         public decimal Total { get; set; }
@@ -39,16 +47,16 @@ namespace PizzaShopWebService.Models
 
 		public decimal CalculatePizzaPrice(Pizza pizza)
 		{
-			decimal Total = (decimal)(6.0 + 3 * (int)pizza.Size);
+			decimal Total = (6M + 3 * (int)pizza.Size);
 
-			Total += (decimal)(pizza.Crust != PizzaCrust.Original ? 1 : 0);
+			Total += (pizza.Crust == PizzaCrust.StuffedCrust ? PizzaCrustPrice : 0);
 
 			foreach (PizzaExtra extra in pizza.Extras) {
-				Total += (decimal)0.75;
+				Total += PizzaExtraPrice;
 			}
 
 			foreach (PizzaTopping topping in pizza.Toppings) {
-				Total += (decimal)0.75;
+				Total += PizzaToppingPrice;
 			}
 
 			return Total;
