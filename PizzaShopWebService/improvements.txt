@@ -6,3 +6,5 @@ Deploy ASP.NET using Docker: https://docs.microsoft.com/en-us/aspnet/core/host-a
 Authentication and Authorizaton: https://docs.microsoft.com/en-us/aspnet/core/security/?view=aspnetcore-3.1
 
 Have items/prices available as JSON seed data for DB?
+
+Have the the information saved in session have keys based on their type names (typeof(x).Name)?
