@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Bob's Pizza</title>
+    <title>@ViewData["Title"] Bob's Pizza</title>
+ 
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -20,47 +21,47 @@
 
 <body style="background-color: #f7fafa">
    
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        @*<div style="height:80px; width:100%; background-color:white">
-
-        </div>*@
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: black;">
+   
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+            <div class="navbar-header" style="background-color: black; height:60px">
+             
                 <a asp-page="/Index" class="navbar-brand" style="color:orange; font-size:x-large"><b>Pizza Shop</b></a><br />
-                <img style="height:50px; width:100px" src="https://firebasestorage.googleapis.com/v0/b/testhouse-ff733.appspot.com/o/x73oiqmvun?alt=media" />
-                <br />
-                .
+                <img style="height:50px; width:100px" src="~/images/pizzaLogo.JPG" />
+            
+                
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-collapse" style="backgroud-color:white">
 
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar">
                     @*<li><a asp-page="/Index">Menu</a></li>*@
 
-                    <li style="width:650px">
-                        ss
+                    <li style="width:700px; color:white">
+                
                     </li>
 
-                    <li><a asp-page="/customerecord">Customer Records</a></li>
+                
 
                     @*<li><a asp-page="/Menu">bllbord <br />Menu</a></li>*@
                     @*<li><a asp-page="/order">order<br />detail</a></li>*@
                     @*<li><a asp-page="/PaymentConfermation">payment <br />confermation</a></li>*@
 
-                    <li><a asp-page="/Transactions">Transactions</a></li>
+                  
                     @*<li><a asp-page="/PaymentOptions"> Payment<br />Options</a></li>*@
                     @*<li><a asp-page="/MenuOnline"> Online<br />menue</a></li>*@
                     @*<li><a asp-page="/Recept">print<br />recpt</a></li>*@
 
                     <li>
-                        <a asp-page="/login" style="color:white">
+                        <a asp-page="/customer/login" style="color:white">
                             <b>
                                 Login
+                            </b>
+                        </a>
+                    </li>
+                     <li>
+                        <a asp-page="/logout" style="color:white">
+                            <b>
+                                logout
                             </b>
                         </a>
                     </li>

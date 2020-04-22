@@ -8,10 +8,9 @@
 	</header>
 
 	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-		<div style="border:1px solid lightgray;width:100%">
-			<h3> @Model.Customer.Name </h3>
 
-			<table style="width:100%">
+			<div style="height: 200px; width:100%; border:1px solid lightgray; overflow-y:scroll">   
+             <table style="width:100%; height:100px; overflow-y:scroll">
 				@foreach (Pizza pizza in @Model.Order.Pizzas) {
 					<thead>
 						<tr>
@@ -61,8 +60,14 @@
 					</thead>
 				}
 			</table>
+			</div>
+		<div style="border:1px solid lightgray;width:100%;height:300px;">
 		
-			<hr />
+		
+
+			
+		
+		
 
 			<table style="width:100%">
 				<tr>
@@ -75,7 +80,7 @@
 				</tr>
 			</table>
 			
-			<hr />
+	
 
 			<table style="width:100%">
 				<tr>
@@ -140,7 +145,7 @@
 		height: 650px;
 		width: 100%;
 		border: 1px solid lightgray;
-		margin-top: 150px;
+	
 		background-color: white;
 		text-transform:capitalize;
 	}
