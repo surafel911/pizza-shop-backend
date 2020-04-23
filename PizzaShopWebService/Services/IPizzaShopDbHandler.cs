@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using PizzaShopWebService.Models;
 
@@ -9,6 +9,7 @@ namespace PizzaShopWebService.Services
 		void AddManager(Manager manager);
 		void AddEmployee(Employee employee);
 		void AddCustomer(Customer customer);
+		void AddTransaction(Transaction transaction);
 
 		Manager FindManager(string phoneNumber);
 		Employee FindEmployee(string phoneNumber);

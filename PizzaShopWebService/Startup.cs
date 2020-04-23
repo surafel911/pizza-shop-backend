@@ -46,6 +46,11 @@ namespace PizzaShopWebService
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
+			Console.WriteLine("info: Database file saved to {0}. Access at the end of execution.", 
+				System.IO.Directory.GetCurrentDirectory() + 
+				(new System.IO.FileInfo(Configuration["FilePath"]).FullName));
+
+
 			using (PizzaShopDbContext pizzaShopDbContext = app.ApplicationServices.CreateScope()
 				.ServiceProvider.GetRequiredService<PizzaShopDbContext>()) {
 
@@ -54,16 +59,6 @@ namespace PizzaShopWebService
 
 					pizzaShopDbContext.Database.EnsureDeleted();
 					pizzaShopDbContext.Database.EnsureCreated();
-
-					pizzaShopDbContext.Add(new Customer
-					{
-						PhoneNumber = "1111111111",
-						Password = "password",
-						Name = "Surafel Assefa",
-						Address = "White House",
-						PaymentType = PaymentType.VisaCard,
-					});
-					pizzaShopDbContext.SaveChanges();
 				}
 				else
 				{
@@ -75,6 +70,18 @@ namespace PizzaShopWebService
 					pizzaShopDbContext.Database.Migrate();
 				}
 			}
+
+			IPizzaShopDbHandler pizzaShopDbHandler = app.ApplicationServices.CreateScope()
+					.ServiceProvider.GetRequiredService<IPizzaShopDbHandler>();
+
+				pizzaShopDbHandler.AddCustomer(new Customer
+					{
+						PhoneNumber = "1111111111",
+						Password = "password",
+						Name = "Mona ",
+						Address = "1600 Pennsylvania Ave NW, Washington, DC 20500",
+						PaymentType = PaymentType.VisaCard,
+					});
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();

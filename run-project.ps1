@@ -1,0 +1,2 @@
+cd PizzaShopWebService/
+dotnet run

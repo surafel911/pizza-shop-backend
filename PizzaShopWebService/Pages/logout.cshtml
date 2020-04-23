@@ -1,7 +1,13 @@
 
 @page
 @model LogoutModel
+
 @{
+	ViewData["Title"] = "Logout";
 }
+
 <h1>Logout</h1>
-<input type="submit"  asp-page="/menu" value="logout" class="submit" style="height: 50px; width:100px;">
+
+<form method="get">
+	<input type="submit"  asp-page="/Index" value="Return to Homepage" class="submit" style="width:20%; border:1px solid lightgray; height:60px; border-radius:5%; font-size:large; background-color:white">
+</form>

@@ -1,24 +1,42 @@
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 using PizzaShopWebService.Data;
 using PizzaShopWebService.Models;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace PizzaShopWebService.Services
 {
     public class PizzaShopDbHandler : IPizzaShopDbHandler
     {
+		private readonly IConfiguration _configuration;
 		private readonly PizzaShopDbContext _pizzaShopDbContext;
 
 		private void AddEntity<T>(T entity)
 		{
+			StringBuilder contents;
+
 			_pizzaShopDbContext.Add(entity);
-			_pizzaShopDbContext.SaveChanges();			
+			_pizzaShopDbContext.SaveChanges();
+
+			contents = new StringBuilder();
+
+			contents.AppendLine(JsonSerializer.Serialize(entity, new JsonSerializerOptions{
+    				WriteIndented = true,
+				}
+			));
+
+			System.IO.File.AppendAllText(_configuration["FilePath"],
+				contents.ToString()
+			);		
 		}
 
-        public PizzaShopDbHandler(PizzaShopDbContext pizzaShopDbContext)
+        public PizzaShopDbHandler(IConfiguration configuration, PizzaShopDbContext pizzaShopDbContext)
 		{
+			_configuration = configuration;
 			_pizzaShopDbContext = pizzaShopDbContext;
 		}
 
@@ -35,6 +53,11 @@ namespace PizzaShopWebService.Services
 		public void AddCustomer(Customer customer)
 		{
 			AddEntity(customer);
+		}
+
+		public void AddTransaction(Transaction transaction)
+		{
+			AddEntity(transaction);
 		}
 
 		public Manager FindManager(string phoneNumber)

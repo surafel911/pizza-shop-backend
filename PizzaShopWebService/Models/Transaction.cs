@@ -18,7 +18,7 @@ namespace PizzaShopWebService.Models
 		[Required]
 		[DataType(DataType.Date)]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
+		[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
 		public DateTime Date { get; set; }
 
 		[Required]

@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.ComponentModel.DataAnnotations;
 
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +54,7 @@ namespace PizzaShopWebService.Pages
 		public IActionResult OnPost()
 		{
 			string order;
+			Transaction transaction;
 			RetrievalType retrievalType;
 
 			retrievalType = Order.RetrievalType;
@@ -63,9 +65,19 @@ namespace PizzaShopWebService.Pages
 			Order.RetrievalType = retrievalType;
 			Order.CalculateTotalPrice();
 
-			HttpContext.Session.SetString("Order", JsonSerializer.Serialize(Order));
+			transaction = new Transaction();
 
-			return RedirectToPage("/PaymentOptions");
+			transaction.Date = DateTime.Now;
+			transaction.Total = Order.Total;
+			transaction.Customer = Customer;
+			transaction.PaymentType = Customer.PaymentType;
+			transaction.RetrievalType = RetrievalType.Carryout;
+			transaction.CustomerPhoneNumber = Customer.PhoneNumber;
+			transaction.OrderJson = JsonSerializer.Serialize(Order);
+
+			_pizzaShopDbHandler.AddTransaction(transaction);
+
+			return RedirectToPage("/Index");
 		}
     }
 }
