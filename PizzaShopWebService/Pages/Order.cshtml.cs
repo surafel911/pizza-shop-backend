@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Net;
+using System.Runtime.Serialization.Json;
+using System;
 using System.Text.Json;
 using System.ComponentModel.DataAnnotations;
 
@@ -29,15 +31,15 @@ namespace PizzaShopWebService.Pages
 
 		public IActionResult OnGet()
 		{
-			string order, PhoneNumber;
+			string order, phoneNumber;
 
-			PhoneNumber = HttpContext.Session.GetString("PhoneNumber");
-			if (string.IsNullOrEmpty(PhoneNumber)) {
+			phoneNumber = HttpContext.Session.GetString("PhoneNumber");
+			if (string.IsNullOrEmpty(phoneNumber)) {
 				// TODO: Handle this condition better
 				return Content("Login required.");
 			}
 
-			Customer = _pizzaShopDbHandler.FindCustomer(PhoneNumber);
+			Customer = _pizzaShopDbHandler.FindCustomer(phoneNumber);
 			if (Customer == null) {
 				// TODO: Handle this condition better
 				return Content("No customer account in this phone number.");
@@ -46,7 +48,8 @@ namespace PizzaShopWebService.Pages
 			// TODO: Handle conditions for employee and manager accounts.
 
 			order = HttpContext.Session.GetString("Order");
-			Order = (order != null ? JsonSerializer.Deserialize<Order>(order) : new Order());
+			Order = (!string.IsNullOrEmpty(order) ? JsonSerializer.Deserialize<Order>(order) :
+				new Order());
 
 			return Page();
         }
@@ -54,30 +57,16 @@ namespace PizzaShopWebService.Pages
 		public IActionResult OnPost()
 		{
 			string order;
-			Transaction transaction;
-			RetrievalType retrievalType;
-
-			retrievalType = Order.RetrievalType;
 
 			order = HttpContext.Session.GetString("Order");
-			Order = (order != null ? JsonSerializer.Deserialize<Order>(order) : new Order());
+			Order = (!string.IsNullOrEmpty(order) ? JsonSerializer.Deserialize<Order>(order) : 
+				new Order());
 			
-			Order.RetrievalType = retrievalType;
 			Order.CalculateTotalPrice();
+			
+			HttpContext.Session.SetString("Order", JsonSerializer.Serialize(Order));
 
-			transaction = new Transaction();
-
-			transaction.Date = DateTime.Now;
-			transaction.Total = Order.Total;
-			transaction.Customer = Customer;
-			transaction.PaymentType = Customer.PaymentType;
-			transaction.RetrievalType = RetrievalType.Carryout;
-			transaction.CustomerPhoneNumber = Customer.PhoneNumber;
-			transaction.OrderJson = JsonSerializer.Serialize(Order);
-
-			_pizzaShopDbHandler.AddTransaction(transaction);
-
-			return RedirectToPage("/Index");
+			return RedirectToPage("/PaymentMethod");
 		}
     }
 }
