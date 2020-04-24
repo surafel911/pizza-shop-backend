@@ -1,3 +1,5 @@
+using System.Net;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -29,7 +31,7 @@ namespace PizzaShopWebService.Services
 				}
 			));
 
-			System.IO.File.AppendAllText(_configuration["FilePath"],
+			File.AppendAllText(_configuration["FilePath"],
 				contents.ToString()
 			);		
 		}
@@ -38,6 +40,10 @@ namespace PizzaShopWebService.Services
 		{
 			_configuration = configuration;
 			_pizzaShopDbContext = pizzaShopDbContext;
+
+			if (File.Exists(_configuration["FilePath"])) {
+				File.Delete(_configuration["FilePath"]);
+			}
 		}
 
 		public void AddManager(Manager manager)
