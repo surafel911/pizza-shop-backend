@@ -22,25 +22,22 @@ namespace PizzaShopWebService.Models
 		
 		public RetrievalType RetrievalType { get; set; }
 
-		public ICollection<Drink> Drinks { get; set; }
-
-		public ICollection<Pizza> Pizzas { get; set; }
+		public Items Items { get; set; }
 
 		public Order()
 		{
-			Drinks = new List<Drink>();
-			Pizzas = new List<Pizza>();
+			Items = new Items();
 		}
 
 		public void CalculateTotalPrice()
 		{
 			Total = CalculateDeliveryPrice();
 
-			foreach (Pizza pizza in Pizzas) {
+			foreach (Pizza pizza in Items.Pizzas) {
 				Total += CalculatePizzaPrice(pizza);
 			}
 
-			foreach (Drink drink in Drinks) {
+			foreach (Drink drink in Items.Drinks) {
 				Total += CalculateDrinkPrice(drink);
 			}
 		}

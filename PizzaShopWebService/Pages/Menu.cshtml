@@ -19,7 +19,7 @@
 			<br />
 
 			<table style="width:100%;">
-				@foreach (Pizza pizza in @Model.Order.Pizzas) {
+				@foreach (Pizza pizza in @Model.Order.Items.Pizzas) {
 					<thead>
 						<tr>
 							<td style="width:80%; text-align:left">
@@ -57,7 +57,7 @@
 			</table>
 			
 			<table style="width:100%;">
-				@foreach (Drink drink in @Model.Order.Drinks) {
+				@foreach (Drink drink in @Model.Order.Items.Drinks) {
 					<thead>
 						<tr>
 							<td style="width:80%; text-align:left">

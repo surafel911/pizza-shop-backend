@@ -33,7 +33,7 @@ namespace PizzaShopWebService.Models
 		public RetrievalType RetrievalType { get; set; }
 
 		[Required]
-		public string OrderJson { get; set; }
+		public string ItemsJson { get; set; }
 
 		// Navagation properties
 		public Customer Customer;
