@@ -1,7 +1,7 @@
 ''piza-shop-webservice''
 
 Since this is an ASP.NET project, it is impossible to simply run it as an executable. Attempt to run the project
-using the provided `run-project.ps1` script. 
+using the provided `run-project.ps1` script.
 
 Right click on `run-project.ps1` and click on `Run in powershell`. This will automatically start the project.
 
