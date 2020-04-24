@@ -1,0 +1,145 @@
+﻿@page
+@model PaymentModel
+@using PizzaShopWebService.Models
+
+@{
+    ViewData["Title"] = "Payment";
+}
+
+<div class="row">
+	<header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<h3> Payment Details </h3>
+	</header>
+
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:left;">
+		<form method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+			<div class="form-group">
+				<h4> Card Number </h4>
+				<input asp-for="Payment.CardNumber" class="form-control" />
+				<span asp-validation-for="Payment.CardNumber" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<h4> Card Type </h4>
+				<select asp-for="Payment.PaymentType" asp-items="Html.GetEnumSelectList<PaymentType>()" class="form-control"></select>
+				<span asp-validation-for="Payment.PaymentType" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<h4> Name </h4>
+				<input asp-for="Payment.Name" class="form-control" />
+				<span asp-validation-for="Payment.Name" class="text-danger"></span>
+			</div>
+
+			<br />
+
+			<table>
+				<tr>
+					<td style="width:70%">
+						<div class="form-group">
+							<h4> Expiration Date </h4>
+							<input asp-for="Payment.ExpirationDate" class="form-control" />
+							<span asp-validation-for="Payment.ExpirationDate" class="text-danger"></span>
+						</div>
+					</td>
+
+					<td>
+						<div class="form-group">
+							<h4> CVC </h4>
+							<input asp-for="Payment.CVC" class="form-control" />
+							<span asp-validation-for="Payment.CVC" class="text-danger"></span>
+						</div>
+					</td>
+				</tr>
+			</table>
+
+
+			<img src="https://www.bing.com/th/id/OIP.-fRzc79XooFc4qm_bcdEzgHaCX?w=299&h=96&c=7&o=5&pid=1.7" />
+
+			<br />
+
+			<input asp-page="/Payment" type="submit" value="Continue" class="submit" />
+		</form>
+	</div>
+</div>
+
+<style>
+	.row {
+		margin: 0%;
+		padding: 0%;
+		height: 650px;
+		width: 100%;
+		border: 1px solid lightgray;
+		margin-top: 150px;
+		background-color: white;
+		/*border: 1px solid lightgray;
+		-moz-box-shadow: 2px 2px 2px 2px darkblue;
+		-webkit-box-shadow: 2px 2px 2px 2px darkblue;
+		box-shadow: 0px 0px 10px 0px gray;*/
+	}
+
+	header {
+		height: 60px;
+		border-bottom: 1px solid lightgray;
+		/*background-color: #febc11;*/
+		font-weight: bold;
+	}
+
+	footer {
+		height: 60px;
+		border-top: 1px solid lightgray;
+	}
+
+	footer h3 {
+		float: right;
+		margin-right: 40px;
+	}
+
+	h3 {
+		text-align: center;
+		text-transform: capitalize;
+	}
+
+	.row div {
+		margin: 0%;
+		/*border: 1px solid lightgray;*/
+		vertical-align: central;
+		display: inline-block;
+		padding: 5%;
+	}
+
+	input {
+		height: 50px;
+		width: 100%;
+		padding-left: 5%;
+		padding-right: 5%;
+		border: 1px solid lightgray;
+	}
+
+	form {
+		padding: 0%;
+		width: 100%;
+	}
+
+	.submit {
+		background-color: black;
+		color: #febc11;
+		font-weight:bold;
+		margin: 0%;
+		display: inline;
+	}
+
+	#formCheck input {
+		width: 100%;
+	}
+
+	h4 {
+		text-transform: uppercase;
+	}
+
+	img{
+		height:80px;		
+	}
+</style>
