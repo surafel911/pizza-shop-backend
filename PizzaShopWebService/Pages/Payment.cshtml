@@ -23,8 +23,9 @@
 
 			<div class="form-group">
 				<h4> Card Type </h4>
-				<select asp-for="Payment.PaymentType" asp-items="Html.GetEnumSelectList<PaymentType>()" class="form-control"></select>
-				<span asp-validation-for="Payment.PaymentType" class="text-danger"></span>
+				<div class="form-group">
+					<label asp-for="Payment.PaymentType" class="control-label"></label>
+				</div>
 			</div>
 
 			<div class="form-group">
@@ -60,9 +61,13 @@
 
 			<br />
 
-			<input asp-page="/Payment" type="submit" value="Continue" class="submit" />
+			<input type="submit" asp-page="/Payment" value="Continue" class="submit"/>
 		</form>
 	</div>
+
+	<form method="get">
+		<input type="submit" asp-page="/PaymentMethod" value="Back" class="submit" style="width:59%" />
+	</form>
 </div>
 
 <style>

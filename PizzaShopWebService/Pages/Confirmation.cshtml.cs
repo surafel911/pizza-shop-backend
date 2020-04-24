@@ -1,22 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
+using System.ComponentModel.DataAnnotations;
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
+
+using PizzaShopWebService.Models;
 
 namespace PizzaShopWebService.Pages
 {
     public class ConfirmationModel : PageModel
     {
-        public string Message { get; set; }
+		[BindProperty]
+		public bool CardUsed { get; set; }
 
-        public void OnGet()
+		[BindProperty]
+		public decimal Total { get; set; }
+
+		[BindProperty]
+		public Payment Payment { get; set; }
+
+		[BindProperty]
+		public PaymentType PaymentType { get; set; }
+
+		// TODO: Confirmation is always redirected to w/ a PaymentType in the session.
+		//		 Check to see if it's a card type, and if so, get the Payment class from
+		//		 the session.
+
+		// TODO: Order cannot be null here. There has to be an order to accesss this page.
+        public IActionResult OnGet()
         {
-            Message = "customer";
+			string data;
+
+			data = HttpContext.Session.GetString("Order");
+			if (string.IsNullOrEmpty(data)) {
+				return Content("Order is required to access this page.");
+			}
+			
+			Total = JsonSerializer.Deserialize<Order>(data).Total;
+
+			PaymentType = (PaymentType)HttpContext.Session.GetInt32("PaymentType");
+
+			if (PaymentType != PaymentType.Cash && 
+				PaymentType != PaymentType.Check) {
+				data = HttpContext.Session.GetString("Payment");
+				Payment = JsonSerializer.Deserialize<Payment>(data);
+				
+				CardUsed = true;
+			} else {
+				Payment = null;
+				CardUsed = false;
+			}
+
+			return Page();
         }
 
-		// TODO: Confirmation needs to read whether "PaymentType.Cash" is in the session.
-		//		 If so, then proceed without card detais. If not, check for card details
-		//		 in session.
+		public IActionResult OnPost()
+		{
+			return RedirectToPage("/Receipt");
+		}
     }
 }

@@ -54,6 +54,8 @@ namespace PizzaShopWebService.Pages
 			return Page();
         }
 
+
+		// TODO: Order cannot be null here. There has to be an order to accesss this page.z
 		public IActionResult OnPost()
 		{
 			string order;

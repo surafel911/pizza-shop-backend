@@ -57,17 +57,12 @@ namespace PizzaShopWebService.Pages
 
 		public IActionResult OnPost()
 		{
-			// TODO: Find out why validation is not working properly.
+			// TODO: Find out why validation is not working properly.\
+			// TODO: Add manual validation
 			
-			if (!ModelState.IsValid) {
-				Console.WriteLine("CardNumber: {0}", ModelState.GetValidationState("CardNumber").ToString());
-				Console.WriteLine("Name: {0}", ModelState.GetValidationState("Name").ToString());
-				Console.WriteLine("PaymentType: {0}", ModelState.GetValidationState("PaymentType").ToString());
-				Console.WriteLine("ExpirationDate: {0}", ModelState.GetValidationState("ExpirationDate").ToString());
-				Console.WriteLine("CVC: {0}", ModelState.GetValidationState("CVC").ToString());
-
-				return Page();
-			}
+			// if (!ModelState.IsValid) {
+			// 	return Page();
+			// }
 
 			HttpContext.Session.SetString("Payment", JsonSerializer.Serialize(Payment));
 

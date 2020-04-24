@@ -7,146 +7,139 @@
 }
 
 <div class="row">
+	<header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<h3> Payment Confirmation </h3>
+	</header>
 
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:left; padding-left:100px;top:80px; vertical-align:central">
+		<div style="text-align:left; padding:0%; margin-bottom:5%">
+			<h3 style="text-align:left;">
+				Total amount  <b> $@Model.Total </b>
+			</h3>
 
-    <header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <h3>
-            payment confemation
-        </h3>
-    </header>
+			<br /> 
 
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:left; padding-left:100px;top:80px; vertical-align:central">
-        <div style="text-align:left; padding:0%; margin-bottom:5%">
-            <h3 style="text-align:left;">
-                Total amount  <b>
-   $ 46.59 <br />
+			<label> will be charging order from this card </label>
+		</div>
 
-</b>
-            </h3>
-            <label>
-               
-               
-                will be charging order from this card
-            
-            </label>
+		<button type="button" class="btn btn-secondary btn-lg" disabled> @Model.PaymentType </button>
 
-        </div>
-       
-        <form method="post">
+		<br /> <br />
 
-            <input type="submit" value="MasterCard " class="submit" style="width:90%; background-color:lightgray; color:white; text-align:left" /> <br />
-            <br />
-            <input type="submit" value="TeddY T Selemon " class="submit" style="width:90%; color:white; background-color:lightgray;text-align:left" /> <br />
-            <input type="submit" value="No ***** **** ***** 8888" class="submit" style="width:90%; color:white; background-color:gray;text-align:left" /> <br /><br />
+		@if(@Model.CardUsed) {
+			<button type="button" class="btn btn-secondary btn-lg" disabled> @Model.Payment.Name </button>
+			<br />
+			<button type="button" class="btn btn-secondary btn-lg" disabled> @Model.Payment.CardNumber </button>
+		}
 
-        </form>
-  
-        <input type="checkbox" style="height:20px;width:20px" name="I" /> <label for="checkbox"> I Agree</label>
+		<br /><br />
 
-    </div>
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:center; top:80px;  vertical-align:central">
+			<div id ="formCheck" style="margin-top:20%;">
+				<form method="post">
+					<input type="submit" asp-page="/Confirmation" value="Continue" class="submit" style="width:59%" />
+				</form>
+				<form method="get">
+					<br /> <br />
+					
+					@if(@Model.CardUsed) {
+						<input type="submit" asp-page="/Payment" value="Back" class="submit" style="width:59%" />
+					} else {
+						<input type="submit" asp-page="/PaymentMethod" value="Back" class="submit" style="width:59%" />
+					}
 
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:center; top:80px;  vertical-align:central">
-        <form id="formCheck" method="post" style="margin-top:20%;">
-            <input type="submit" asp-page="/Recept" value="Continue" class="submit" style="width:59%" /> <br /> <br />
-            <input type="submit" asp-page="/Recept" value="Back" class="submit" style="width:59%" /> <br /> <br />
-            @*<input type="submit" asp-page="/NewPayment" value="go back" class="submit" style="width:59%" /> <br /> <br />*@
+					<br /> <br />
+					@*<input type="submit" asp-page="/NewPayment" value="go back" class="submit" style="width:59%" /> <br /> <br />*@
+				</form>
+			</div>
+		</div>
+	</div>
 
-        </form>
-    </div>
-    @*<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <form id="formCheck" method="post" style="margin-top:25%;">
+	@*
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+		<form id="formCheck" method="post" style="margin-top:25%;">
+			<input type="submit" value="conferm to percide" class="submit" style="width:59%" /> <br /> <br />
+			<input type="submit" value="decline" class="submit" style="width:59%" /> <br /> <br />
+		</form>
+	</div>
+	*@
 
-
-
-                <input type="submit" value="conferm to percide" class="submit" style="width:59%" /> <br /> <br />
-                <input type="submit" value="decline" class="submit" style="width:59%" /> <br /> <br />
-
-
-
-            </form>
-        </div>*@
-    @*<footer class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-            <input type="submit" value="continue" style="width:15%;  background-color:lightgray; float:right"  class="submit" />
-        </footer>*@
-
-
-
-
-
-
-
+	@*
+	<footer class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<input type="submit" value="continue" style="width:15%;  background-color:lightgray; float:right"  class="submit" />
+	</footer>
+	*@
 </div>
 
 <style>
-    .row {
-        margin: 0%;
-        padding: 0%;
-        height: 650px;
-        width: 100%;
-        margin-top: 150px;
-        background-color: white;
-        border: 1px solid lightgray;
-    }
+	.row {
+		margin: 0%;
+		padding: 0%;
+		height: 650px;
+		width: 100%;
+		margin-top: 150px;
+		background-color: white;
+		border: 1px solid lightgray;
+	}
 
-    header {
-        height: 60px;
-        border-bottom: 1px solid lightgray;
-        /*background-color: #febc11;*/
-        font-weight: bold;
-    }
+	header {
+		height: 60px;
+		border-bottom: 1px solid lightgray;
+		/*background-color: #febc11;*/
+		font-weight: bold;
+	}
 
-    footer {
-        height: 60px;
-        border-top: 1px solid lightgray;
-    }
+	footer {
+		height: 60px;
+		border-top: 1px solid lightgray;
+	}
 
-        footer h3 {
-            float: right;
-            margin-right: 40px;
-        }
+	footer h3 {
+		float: right;
+		margin-right: 40px;
+	}
 
-    h3 {
-        text-align: center;
-        text-transform: capitalize;
-    }
+	h3 {
+		text-align: center;
+		text-transform: capitalize;
+	}
 
-    .row div {
-        margin: 0%;
-        /*border: 1px solid lightgray;*/
-        vertical-align: central;
-        display: inline-block;
-        padding: 5%;
-    }
+	.row div {
+		margin: 0%;
+		/*border: 1px solid lightgray;*/
+		vertical-align: central;
+		display: inline-block;
+		padding: 5%;
+	}
 
-    input {
-        height: 50px;
-        width: 100%;
-        padding-left: 5%;
-        padding-right: 5%;
-        border: 1px solid lightgray;
-    }
+	input {
+		height: 50px;
+		width: 100%;
+		padding-left: 5%;
+		padding-right: 5%;
+		border: 1px solid lightgray;
+	}
 
-    form {
-        padding: 0%;
-        width: 100%;
-    }
+	form {
+		padding: 0%;
+		width: 100%;
+	}
 
-    .submit {
-        background-color: black;
-        color: #febc11;
-        font-weight: bold;
-        width: 49%;
-        margin: 0%;
-        display: inline;
-    }
+	.submit {
+		background-color: black;
+		color: #febc11;
+		font-weight: bold;
+		width: 49%;
+		margin: 0%;
+		display: inline;
+	}
 
-    #formCheck input {
-        width: 100%;
-    }
+	#formCheck input {
+		width: 100%;
+	}
 
-    h4 {
-        text-transform: uppercase;
-    }
+	h4 {
+		text-transform: uppercase;
+	}
 </style>
 

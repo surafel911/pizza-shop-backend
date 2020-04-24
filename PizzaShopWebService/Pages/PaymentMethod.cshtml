@@ -7,23 +7,26 @@
 }
 
 <div class="row">
-    <header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <h3> Select Payment Method </h3>
-    </header>
+	<header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<h3> Select Payment Method </h3>
+	</header>
+	<form id="formCheck" method="post" style="margin-top:20%;">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:center; top:80px;  vertical-align:central">
+			<h4>How would you like to pay?</h4><br />
+			
+			<select asp-for="PaymentType" asp-items="Html.GetEnumSelectList<PaymentType>()" class="form-control"></select>
+			<span asp-validation-for="PaymentType" class="text-danger"></span>	
+		</div>
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"  style="text-align:center; top:80px;  vertical-align:central">
+			<input type="submit"  asp-page="/PaymentOptions"  value="Continue" class="submit" style="width:59%" /> <br /> <br />	
+		</div>
+	</form>
 
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:center; top:80px;  vertical-align:central">
-        <form method="post">
-            <h4>How would you like to pay?</h4><br />
-            
-            <select asp-for="PaymentType" asp-items="Html.GetEnumSelectList<PaymentType>()" class="form-control"></select>
-            <span asp-validation-for="PaymentType" class="text-danger"></span>
-        </form>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"  style="text-align:center; top:80px;  vertical-align:central">
-        <form id="formCheck" method="post" style="margin-top:20%;">
-            <input type="submit"  asp-page="/PaymentOptions"  value="Continue" class="submit" style="width:59%" /> <br /> <br />
-        </form>
-    </div>
+	<form method="get">
+		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"  style="text-align:center; top:80px;  vertical-align:central">
+			<input type="submit"  asp-page="/Order"  value="Back" class="submit" style="width:59%" /> <br /> <br />	
+		</div>
+	</form>
 </div>
 
 <style>
