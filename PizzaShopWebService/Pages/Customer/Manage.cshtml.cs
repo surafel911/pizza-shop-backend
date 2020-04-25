@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using PizzaShopWebService.Models;
 using PizzaShopWebService.Services;
 
-namespace PizzaShopWebService.Pages
+namespace PizzaShopWebService.Pages.Customer
 {
-    public class SignupModel : PageModel   
+    public class ManageModel : PageModel   
     {
 		private readonly IPizzaShopDbHandler _pizzaShopDbHandler;
 
@@ -20,7 +15,7 @@ namespace PizzaShopWebService.Pages
 
 		public string ErrorMessage { get; private set; }
 
-		public SignupModel(IPizzaShopDbHandler pizzaShopDbHandler)
+		public ManageModel(IPizzaShopDbHandler pizzaShopDbHandler)
 		{
 			_pizzaShopDbHandler = pizzaShopDbHandler;
 		}

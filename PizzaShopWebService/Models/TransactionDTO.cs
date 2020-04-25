@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PizzaShopWebService.Models
 {
-	public class Transaction
+	public class TransactionDTO
 	{
 		[Required]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -36,6 +36,6 @@ namespace PizzaShopWebService.Models
 		public string ItemsJson { get; set; }
 
 		// Navagation properties
-		public Customer Customer;
+		public CustomerDTO Customer;
 	}
 }

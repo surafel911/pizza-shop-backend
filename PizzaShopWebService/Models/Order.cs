@@ -22,11 +22,11 @@ namespace PizzaShopWebService.Models
 		
 		public RetrievalType RetrievalType { get; set; }
 
-		public Items Items { get; set; }
+		public ItemsDTO Items { get; set; }
 
 		public Order()
 		{
-			Items = new Items();
+			Items = new ItemsDTO();
 		}
 
 		public void CalculateTotalPrice()

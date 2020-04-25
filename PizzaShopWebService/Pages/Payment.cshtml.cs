@@ -21,7 +21,7 @@ namespace PizzaShopWebService.Pages
 		public Payment Payment { get; set; }
 
 		[BindProperty]
-		public Customer Customer { get; set; }
+		public CustomerDTO Customer { get; set; }
 
 		public PaymentModel(IPizzaShopDbHandler pizzaShopDbHandler)
 		{

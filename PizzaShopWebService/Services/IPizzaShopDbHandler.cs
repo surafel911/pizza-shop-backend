@@ -6,13 +6,13 @@ namespace PizzaShopWebService.Services
 {
     public interface IPizzaShopDbHandler
     {
-		void AddManager(Manager manager);
-		void AddEmployee(Employee employee);
-		void AddCustomer(Customer customer);
-		void AddTransaction(Transaction transaction);
+		void AddManager(ManagerDTO manager);
+		void AddEmployee(EmployeeDTO employee);
+		void AddCustomer(CustomerDTO customer);
+		void AddTransaction(TransactionDTO transaction);
 
-		Manager FindManager(string phoneNumber);
-		Employee FindEmployee(string phoneNumber);
-        Customer FindCustomer(string phoneNumber);
+		ManagerDTO FindManager(string phoneNumber);
+		EmployeeDTO FindEmployee(string phoneNumber);
+        CustomerDTO FindCustomer(string phoneNumber);
     }
 }

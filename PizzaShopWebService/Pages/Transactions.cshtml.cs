@@ -10,16 +10,10 @@ namespace PizzaShopWebService.Pages
 {
     public class TransactionsModel : PageModel
     {
-        public string Message { get; set; }
         
         public void OnGet()
         {
             Message = "all transaction";
-        }
-
-        public ICollection<Transaction> ReturnAllTransaction()
-        {
-            return new List<Transaction>();
         }
     }
 

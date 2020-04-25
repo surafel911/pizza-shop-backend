@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
 using System.ComponentModel.DataAnnotations;
 
 using Microsoft.AspNetCore.Mvc;
@@ -49,6 +50,7 @@ namespace PizzaShopWebService.Pages
 				CardUsed = true;
 			} else {
 				Payment = null;
+
 				CardUsed = false;
 			}
 
@@ -57,6 +59,16 @@ namespace PizzaShopWebService.Pages
 
 		public IActionResult OnPost()
 		{
+			string data;
+
+			data = HttpContext.Session.GetString("PhoneNumber");
+
+			
+
+
+			HttpContext.Session.Clear();
+			HttpContext.Session.SetString("PhoneNumber", data);
+
 			return RedirectToPage("/Receipt");
 		}
     }

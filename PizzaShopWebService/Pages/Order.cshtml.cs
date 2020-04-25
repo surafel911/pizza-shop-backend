@@ -21,7 +21,7 @@ namespace PizzaShopWebService.Pages
 		public Order Order { get; set; }
 
 		[BindProperty]
-		public Customer Customer { get; private set; }
+		public CustomerDTO Customer { get; private set; }
 
 		public OrderModel(IPizzaShopDbHandler pizzaShopDbHandler)
 		{

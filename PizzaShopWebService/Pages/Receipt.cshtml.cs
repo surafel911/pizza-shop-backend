@@ -1,20 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
 
 using PizzaShopWebService.Models;
+using PizzaShopWebService.Services;
 
 namespace PizzaShopWebService.Pages
 {
     public class ReceiptModel : PageModel
     {
-		public Transaction Transaction { get; set; }
+        private readonly IPizzaShopDbHandler _pizzaShopDbHandler;
 
-        public void OnGet()
+        [BindProperty]
+        public TransactionDTO Transaction { get; set; }
+
+        public ReceiptModel(IPizzaShopDbHandler pizzaShopDbHandler)
         {
-			
+            _pizzaShopDbHandler = pizzaShopDbHandler;
+        }
+
+        public IActionResult OnGet()
+        {
+            string phoneNumber;
+            CustomerDTO customer;
+
+            phoneNumber = HttpContext.Session.GetString("PhoneNumber");
+            if (string.IsNullOrEmpty(phoneNumber)) {
+				// TODO: Handle this condition better
+				return Content("Login required.");
+			}
+
+            customer = _pizzaShopDbHandler.FindCustomer(phoneNumber);
+            if (customer == null) {
+				// TODO: Handle this condition better
+				return Content("No customer account in this phone number.");
+            }
+
+			return Page();
         }
     }
 }

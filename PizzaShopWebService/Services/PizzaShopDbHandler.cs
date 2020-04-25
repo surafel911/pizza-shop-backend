@@ -46,29 +46,29 @@ namespace PizzaShopWebService.Services
 			}
 		}
 
-		public void AddManager(Manager manager)
+		public void AddManager(ManagerDTO manager)
 		{
 			AddEntity(manager);
 		}
 
-		public void AddEmployee(Employee employee)
+		public void AddEmployee(EmployeeDTO employee)
 		{
 			AddEntity(employee);
 		}
 
-		public void AddCustomer(Customer customer)
+		public void AddCustomer(CustomerDTO customer)
 		{
 			AddEntity(customer);
 		}
 
-		public void AddTransaction(Transaction transaction)
+		public void AddTransaction(TransactionDTO transaction)
 		{
 			AddEntity(transaction);
 		}
 
-		public Manager FindManager(string phoneNumber)
+		public ManagerDTO FindManager(string phoneNumber)
 		{
-			Manager manager = null;
+			ManagerDTO manager = null;
 
 			if (string.IsNullOrEmpty(phoneNumber)) {
 				return manager;
@@ -79,9 +79,9 @@ namespace PizzaShopWebService.Services
 			return manager;
 		}
 
-		public Employee FindEmployee(string phoneNumber)
+		public EmployeeDTO FindEmployee(string phoneNumber)
 		{
-			Employee employee = null;
+			EmployeeDTO employee = null;
 
 			if (string.IsNullOrEmpty(phoneNumber)) {
 				return employee;
@@ -92,9 +92,9 @@ namespace PizzaShopWebService.Services
 			return employee;
 		}
 
-		public Customer FindCustomer(string phoneNumber)
+		public CustomerDTO FindCustomer(string phoneNumber)
 		{
-			Customer customer = null;
+			CustomerDTO customer = null;
 
 			if (string.IsNullOrEmpty(phoneNumber)) {
 				return customer;

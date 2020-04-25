@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PizzaShopWebService.Models
 {
-    public class Customer : IAccount
+    public class CustomerDTO : IAccount
     {
 		[Required]
 		[Phone]
@@ -30,6 +30,6 @@ namespace PizzaShopWebService.Models
 		public string AddressDetails { get; set; }
 
 		// Navagation properties
-		public ICollection<Transaction> Transactions { get; set; }
+		public ICollection<TransactionDTO> Transactions { get; set; }
     }
 }

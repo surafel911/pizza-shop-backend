@@ -33,17 +33,18 @@ namespace PizzaShopWebService.Pages
 
 		public IActionResult OnGet()
 		{
-			string order, phoneNumber;
+			string data;
+			CustomerDTO customer;
 
-			phoneNumber = HttpContext.Session.GetString("PhoneNumber");
-			if (string.IsNullOrEmpty(phoneNumber)) {
+			data = HttpContext.Session.GetString("PhoneNumber");
+			if (string.IsNullOrEmpty(data)) {
 				// TODO: Handle this condition better
 				return Content("Login required.");
 			}
 
 			// TODO: Handle conditions for employee and manager accounts.
 
-			Customer customer = _pizzaShopDbHandler.FindCustomer(phoneNumber);
+			customer = _pizzaShopDbHandler.FindCustomer(data);
 			if (customer == null) {
 				// TODO: Handle this condition better
 				return Content("No customer account in this phone number.");

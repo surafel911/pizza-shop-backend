@@ -7,7 +7,7 @@ namespace PizzaShopWebService.Models
     public class Payment
     {
 		[Required]
-		[DataType(DataType.CreditCard)]
+		[CreditCard]
 		public string CardNumber { get; set; }
 
 		[Required]

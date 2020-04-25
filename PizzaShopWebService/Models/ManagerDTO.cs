@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PizzaShopWebService.Models
 {
-	public class Employee : IAccount
+	public class ManagerDTO : IAccount
 	{
+
 		[Required]
 		[Phone]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -13,7 +14,7 @@ namespace PizzaShopWebService.Models
 		[Required]
 		[DataType(DataType.Password)]
 		public string Password { get; set; }
-
+		
 		[Required]
 		public string Name { get; set; }
 	}

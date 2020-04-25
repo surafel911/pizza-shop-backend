@@ -22,7 +22,7 @@ namespace PizzaShopWebService.Pages
         public IActionResult OnGet()
         {
             string phoneNumber;
-            Customer customer;
+            CustomerDTO customer;
 
             phoneNumber = HttpContext.Session.GetString("PhoneNumber");
             if (string.IsNullOrEmpty(phoneNumber)) {
