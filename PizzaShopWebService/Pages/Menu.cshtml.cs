@@ -50,8 +50,11 @@ namespace PizzaShopWebService.Pages
 				return Content("No customer account in this phone number.");
 			}
 
-			order = HttpContext.Session.GetString("Order");
-			Order = (!string.IsNullOrEmpty(order) ? JsonSerializer.Deserialize<Order>(order) :
+			ViewData["Store"] = false;
+			ViewData["Account"] = customer.Name;
+
+			data = HttpContext.Session.GetString("Order");
+			Order = (!string.IsNullOrEmpty(data) ? JsonSerializer.Deserialize<Order>(data) :
 				new Order());
 
 			return Page();
@@ -69,7 +72,7 @@ namespace PizzaShopWebService.Pages
 			Order = (order != null ? JsonSerializer.Deserialize<Order>(order) :
 				new Order());
 
-			if (Order.Items.Drinks.Count == 0 && Order.Items.Pizzas.Count == 0) {
+			if (Order.ItemsDTO.Drinks.Count == 0 && Order.ItemsDTO.Pizzas.Count == 0) {
 				return Page();
 			}
 
@@ -88,8 +91,8 @@ namespace PizzaShopWebService.Pages
 			Order = (order != null ? JsonSerializer.Deserialize<Order>(order) :
 				new Order());
 
-			Order.Items.Pizzas.Add(CurrentPizza);
-			Order.CalculateTotalPrice();
+			Order.ItemsDTO.Pizzas.Add(CurrentPizza);
+			Order.Total = PriceManager.CalculateOrderPrice(Order);
 
 			HttpContext.Session.SetString("Order", JsonSerializer.Serialize(Order));
 
@@ -108,8 +111,8 @@ namespace PizzaShopWebService.Pages
 			Order = (order != null ? JsonSerializer.Deserialize<Order>(order) :
 				new Order());
 
-			Order.Items.Drinks.Add(CurrentDrink);
-			Order.CalculateTotalPrice();
+			Order.ItemsDTO.Drinks.Add(CurrentDrink);
+			Order.Total = PriceManager.CalculateOrderPrice(Order);
 
 			HttpContext.Session.SetString("Order", JsonSerializer.Serialize(Order));
 

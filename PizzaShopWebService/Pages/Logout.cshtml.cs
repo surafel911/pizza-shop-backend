@@ -10,6 +10,9 @@ namespace PizzaShopWebService.Pages
 		{
 			HttpContext.Session.Clear();
 
+			ViewData["Store"] = false;
+			ViewData["Account"] = string.Empty;
+
 			return Page();
 		}
     }

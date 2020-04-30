@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PizzaShopWebService.Models
 {
 	// TODO: Figure out why this validation is failing
-    public class Payment
+    public class PaymentDTO
     {
 		[Required]
 		[CreditCard]

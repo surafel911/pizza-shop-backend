@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] Bob's Pizza</title>
+    <title> @ViewData["Title"] Bob's Pizza </title>
  
 
     <environment include="Development">
@@ -32,33 +32,43 @@
                 
             </div>
             <div class="navbar-collapse" style="backgroud-color:white">
-
                 <ul class="nav navbar">
-                    @*<li><a asp-page="/Index">Menu</a></li>*@
-
-                    <li style="width:700px; color:white">
-                    </li>
-					
-                    @*<li><a asp-page="/Menu">bllbord <br />Menu</a></li>*@
-                    @*<li><a asp-page="/order">order<br />detail</a></li>*@
-                    @*<li><a asp-page="/PaymentConfermation">payment <br />confermation</a></li>*@
-
-                  
-                    @*<li><a asp-page="/PaymentOptions"> Payment<br />Options</a></li>*@
-                    @*<li><a asp-page="/MenuOnline"> Online<br />menue</a></li>*@
-                    @*<li><a asp-page="/Recept">print<br />recpt</a></li>*@
-
-                    <li>
-                        <a asp-page="/Customer/Login" style="color:white">
-                            <b> Login </b>
-                        </a>
-                    </li>
-
-                     <li>
-                        <a asp-page="/Logout" style="color:white">
-                            <b> Logout </b>
-                        </a>
-                    </li>
+					@if ((bool)@ViewData["Store"]) {
+						<li style="width:700px; color:white">
+							@ViewData["Account"]
+						</li>
+						
+						<li>
+							<a asp-page="/Store/Login" style="color:white">
+								<b> Login </b>
+							</a>
+						</li>
+						<li>
+							<a asp-page="/Logout" style="color:white">
+								<b> Logout </b>
+							</a>
+						</li>
+					} else {
+						<li style="width:700px; color:white">
+							@ViewData["Account"]
+						</li>
+						
+						<li>
+							<a asp-page="/Customer/Login" style="color:white">
+								<b> Login </b>
+							</a>
+						</li>
+						<li>
+							<a asp-page="/Customer/Manage" style="color:white">
+								<b> Manage </b>
+							</a>
+						</li>
+						<li>
+							<a asp-page="/Logout" style="color:white">
+								<b> Logout </b>
+							</a>
+						</li>
+					}
                 </ul>
             </div>
         </div>

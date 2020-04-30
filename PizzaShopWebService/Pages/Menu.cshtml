@@ -19,14 +19,14 @@
 			<br />
 
 			<table style="width:100%;">
-				@foreach (Pizza pizza in @Model.Order.Items.Pizzas) {
+				@foreach (Pizza pizza in @Model.Order.ItemsDTO.Pizzas) {
 					<thead>
 						<tr>
 							<td style="width:80%; text-align:left">
 								<h3> Pizza - @pizza.Size</h3>
 							</td>
 							<td style="width:20%; text-align:right;">
-								<h3> $@Model.Order.CalculatePizzaPrice(pizza) </h3>
+								<h3> $@PriceManager.CalculatePizzaPrice(pizza) </h3>
 							</td>
 						</tr>
 					</thead>
@@ -57,14 +57,14 @@
 			</table>
 			
 			<table style="width:100%;">
-				@foreach (Drink drink in @Model.Order.Items.Drinks) {
+				@foreach (Drink drink in @Model.Order.ItemsDTO.Drinks) {
 					<thead>
 						<tr>
 							<td style="width:80%; text-align:left">
 								<h3> Drink - @drink.Type </h3>
 							</td>
 							<td style="width:20%; text-align:right;">
-								<h3> $@Model.Order.CalculateDrinkPrice(drink) </h3>
+								<h3> $@PriceManager.CalculateDrinkPrice(drink) </h3>
 							</td>
 						</tr>
 					</thead>
@@ -112,21 +112,21 @@
 
 					<div class="form-group">
 						<h5 style="text-align:center; color:white;"> Crust </<h5>
-						<p> $@Model.Order.PizzaCrustPrice for stuffed crust. </p>
+						<p> $@PriceManager.PizzaCrustPrice for stuffed crust. </p>
 						<select asp-for="CurrentPizza.Crust" asp-items="Html.GetEnumSelectList<PizzaCrust>()" class="form-control"></select> 
 						<span asp-validation-for="CurrentPizza.Crust" class="text-danger"></span>
 					</div>
 
 					<div class="form-group">
 						<h5 style="text-align:center; color:white;"> Toppings </<h5>
-						<p> $@Model.Order.PizzaToppingPrice per topping. </p>
+						<p> $@PriceManager.PizzaToppingPrice per topping. </p>
 						<select asp-for="CurrentPizza.Toppings" asp-items="Html.GetEnumSelectList<PizzaTopping>()" class="form-control"></select>
 						<span asp-validation-for="CurrentPizza.Toppings" class="text-danger"></span>
 					</div>
 
 					<div class="form-group">
 						<h5 style="text-align:center; color:white;"> Extras </<h5>
-						<p> $@Model.Order.PizzaExtraPrice per extra. </p>
+						<p> $@PriceManager.PizzaExtraPrice per extra. </p>
 						<select asp-for="CurrentPizza.Extras" asp-items="Html.GetEnumSelectList<PizzaExtra>()" class="form-control"></select>
 						<span asp-validation-for="CurrentPizza.Extras" class="text-danger"></span>
 					</div>

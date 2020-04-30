@@ -1,99 +1,86 @@
 ﻿@page
-@model TransactionsModel
+@model Store.TransactionsModel
+@using PizzaShopWebService.Models
 
 @{
     ViewData["Title"] = "Transactions";
 }
 
-
 <div class="row">
-
     <header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <h3>
-            transactions
-        </h3>
+        <h3> Transactions </h3>
     </header>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-        <h4>
-            Search transactions by phone number
-        </h4>
-        <input type="text" name="ContactName" value="" placeholder="(555) 55 5555" style="width:80%" />
-        <input type="submit" value="search" class="submit" style="width:19%" />
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h4> Search transactions by phone number </h4>
+		<form method="get">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<input asp-for="PhoneNumber" class="form-control" />
+				<span asp-validation-for="PhoneNumber" class="text-danger"></span>
+			</div>
+
+			<input asp-page="/Store/Transactions" type="submit" value="Search" class="submit" />
+		</form>
         <hr />
+
         <table style="width:100%; text-align:center">
             <thead style="font-weight:bold; background-color:lightgray">
                 <tr>
-
                     <td>
-                        <h4>
-                            Transaction Id
-                        </h4>
+                        <h4> Transaction Id  </h4>
                     </td>
                     <td>
-                        <h4>Name</h4>
+                        <h4> Name </h4>
                     </td>
                     <td>
-                        <h4>address</h4>
+                        <h4> Address </h4>
                     </td>
                     <td>
-                        <h4>Phone number</h4>
-                    </td>
-
-                    <td>
-                        <h4>Date</h4>
+                        <h4> Phone Number </h4>
                     </td>
                     <td>
-                        <h4>PaymentType</h4>
+                        <h4> Date </h4>
+                    </td>
+	               	<td>
+                        <h4> Total </h4>
+                    </td>
+                    <td>
+                        <h4> PaymentType </h4>
                     </td>
                 </tr>
             </thead>
+
             <tbody>
-                @foreach (var r in Model.ReturnAllTransaction())
+                @foreach (TransactionDTO transactionDTO in Model.TransactionDTOs)
                 {
-                <tr style="height:50px; border-bottom:1px solid lightgray; font-weight:normal">
-
-                    <td> <h5>
-    @r.TransactionID
-</h5></td>
-                    <td> <h5>
-    @r.Customer.Name
-</h5></td>
-                    <td>
-                        <h5>  @r.Customer.Address</h5>
-                  </td>
-                    <td>
-                        <h5>
-                            @r.CustomerPhoneNumber
-                        </h5>
-                    </td>
-
-                    <td>
-                        <h5> @r.Date</h5>
-                       
-                    </td>
-                    <td>
-                        <h5> @r.PaymentType</h5>
-                       
-                    </td>
-
-
-                </tr>
-
+					<tr style="height:50px; border-bottom:1px solid lightgray; font-weight:normal">
+		               <td>
+                        	<h5> @Html.DisplayFor(modelItem => transactionDTO.TransactionID) </h5>
+                    	</td>
+						<td>
+							<h5> @Html.DisplayFor(modelItem => transactionDTO.CustomerDTO.Name) </h5>
+						</td>
+						<td>
+							<h5>  @Html.DisplayFor(modelItem => transactionDTO.CustomerDTO.Address) </h5>
+						</td>
+						<td>
+							<h5> @Html.DisplayFor(modelItem => transactionDTO.CustomerPhoneNumber) </h5>
+						</td>
+						<td>
+							<h5> @Html.DisplayFor(modelItem => transactionDTO.Date) </h5>
+						</td>
+						<td>
+							<h4>  @Html.DisplayFor(modelItem => transactionDTO.Total) </h4>
+						</td>
+						<td>
+							<h5> @Html.DisplayFor(modelItem => transactionDTO.PaymentType) </h5>
+						</td>
+					</tr>
                 }
-
             </tbody>
         </table>
     </div>
-
-
-
-
-
-
-
-
-
 </div>
 
 <style>

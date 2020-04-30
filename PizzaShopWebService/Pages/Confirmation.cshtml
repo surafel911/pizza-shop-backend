@@ -19,17 +19,19 @@
 
 			<br /> 
 
-			<label> will be charging order from this card </label>
+			<label> You will pay with </label>
 		</div>
+
+		<br />
 
 		<button type="button" class="btn btn-secondary btn-lg" disabled> @Model.PaymentType </button>
 
 		<br /> <br />
 
 		@if(@Model.CardUsed) {
-			<button type="button" class="btn btn-secondary btn-lg" disabled> @Model.Payment.Name </button>
-			<br />
-			<button type="button" class="btn btn-secondary btn-lg" disabled> @Model.Payment.CardNumber </button>
+			<button type="button" class="btn btn-secondary btn-lg" disabled> @Model.PaymentDTO.Name </button>
+			<br /> <br />
+			<button type="button" class="btn btn-secondary btn-lg" disabled> ****-****-****-@Model.LastFourOfCardNumber </button>
 		}
 
 		<br /><br />
@@ -37,15 +39,16 @@
 		<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:center; top:80px;  vertical-align:central">
 			<div id ="formCheck" style="margin-top:20%;">
 				<form method="post">
-					<input type="submit" asp-page="/Confirmation" value="Continue" class="submit" style="width:59%" />
+					<input type="submit" asp-page="/Confirmation" value="Continue" class="submit" />
 				</form>
-				<form method="get">
-					<br /> <br />
-					
+
+				<br /> <br />
+
+				<form method="get">	
 					@if(@Model.CardUsed) {
-						<input type="submit" asp-page="/Payment" value="Back" class="submit" style="width:59%" />
+						<input type="submit" asp-page="/Payment" value="Back" class="submit" />
 					} else {
-						<input type="submit" asp-page="/PaymentMethod" value="Back" class="submit" style="width:59%" />
+						<input type="submit" asp-page="/PaymentMethod" value="Back" class="submit" />
 					}
 
 					<br /> <br />

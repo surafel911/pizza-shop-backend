@@ -21,11 +21,10 @@ namespace PizzaShopWebService.Pages
 		public Order Order { get; set; }
 
 		[BindProperty]
-		public CustomerDTO Customer { get; private set; }
+		public CustomerDTO CustomerDTO { get; private set; }
 
 		public OrderModel(IPizzaShopDbHandler pizzaShopDbHandler)
 		{
-			Customer = new Customer();
 			_pizzaShopDbHandler = pizzaShopDbHandler;
 		}
 
@@ -39,11 +38,14 @@ namespace PizzaShopWebService.Pages
 				return Content("Login required.");
 			}
 
-			Customer = _pizzaShopDbHandler.FindCustomer(phoneNumber);
-			if (Customer == null) {
+			CustomerDTO = _pizzaShopDbHandler.FindCustomer(phoneNumber);
+			if (CustomerDTO == null) {
 				// TODO: Handle this condition better
 				return Content("No customer account in this phone number.");
 			}
+
+			ViewData["Store"] = false;
+			ViewData["Account"] = CustomerDTO.Name;
 
 			// TODO: Handle conditions for employee and manager accounts.
 
@@ -58,13 +60,13 @@ namespace PizzaShopWebService.Pages
 		// TODO: Order cannot be null here. There has to be an order to accesss this page.z
 		public IActionResult OnPost()
 		{
-			string order;
+			RetrievalType retrievalType;
 
-			order = HttpContext.Session.GetString("Order");
-			Order = (!string.IsNullOrEmpty(order) ? JsonSerializer.Deserialize<Order>(order) : 
-				new Order());
-			
-			Order.CalculateTotalPrice();
+			retrievalType = Order.RetrievalType;
+
+			Order = JsonSerializer.Deserialize<Order>(HttpContext.Session.GetString("Order"));
+			Order.RetrievalType = retrievalType;
+			Order.Total = PriceManager.CalculateOrderPrice(Order);
 			
 			HttpContext.Session.SetString("Order", JsonSerializer.Serialize(Order));
 

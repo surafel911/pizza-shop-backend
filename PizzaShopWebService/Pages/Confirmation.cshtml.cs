@@ -7,31 +7,55 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
 
 using PizzaShopWebService.Models;
+using PizzaShopWebService.Services	;
 
 namespace PizzaShopWebService.Pages
 {
     public class ConfirmationModel : PageModel
     {
-		[BindProperty]
-		public bool CardUsed { get; set; }
+		private readonly IPizzaShopDbHandler _pizzaShopDbHandler;
 
-		[BindProperty]
-		public decimal Total { get; set; }
+		public bool CardUsed { get; private set; }
 
-		[BindProperty]
-		public Payment Payment { get; set; }
+		public decimal Total { get; private set; }
 
-		[BindProperty]
-		public PaymentType PaymentType { get; set; }
+		public string LastFourOfCardNumber { get; private set; }
+
+		public PaymentDTO PaymentDTO { get; private set; }
+
+		public PaymentType PaymentType { get; private set; }
+
 
 		// TODO: Confirmation is always redirected to w/ a PaymentType in the session.
 		//		 Check to see if it's a card type, and if so, get the Payment class from
 		//		 the session.
 
+        public ConfirmationModel(IPizzaShopDbHandler pizzaShopDbHandler)
+        {
+            _pizzaShopDbHandler = pizzaShopDbHandler;
+        }
+
+
 		// TODO: Order cannot be null here. There has to be an order to accesss this page.
         public IActionResult OnGet()
         {
 			string data;
+			CustomerDTO customer;
+
+			data = HttpContext.Session.GetString("PhoneNumber");
+			if (string.IsNullOrEmpty(data)) {
+				// TODO: Handle this condition better
+                return Content("Login required.");
+			}
+
+			customer = _pizzaShopDbHandler.FindCustomer(data);
+			if (customer == null) {
+				// TODO: Handle this condition better
+				return Content("No customer account in this phone number.");
+			}
+
+			ViewData["Store"] = false;
+			ViewData["Account"] = customer.Name;
 
 			data = HttpContext.Session.GetString("Order");
 			if (string.IsNullOrEmpty(data)) {
@@ -44,14 +68,14 @@ namespace PizzaShopWebService.Pages
 
 			if (PaymentType != PaymentType.Cash && 
 				PaymentType != PaymentType.Check) {
-				data = HttpContext.Session.GetString("Payment");
-				Payment = JsonSerializer.Deserialize<Payment>(data);
-				
 				CardUsed = true;
+				data = HttpContext.Session.GetString("PaymentDTO");
+				PaymentDTO = JsonSerializer.Deserialize<PaymentDTO>(data);
+				LastFourOfCardNumber = PaymentDTO.CardNumber.Substring(PaymentDTO.CardNumber.Length - 4);
 			} else {
-				Payment = null;
-
 				CardUsed = false;
+				PaymentDTO = null;
+				LastFourOfCardNumber = string.Empty;
 			}
 
 			return Page();
@@ -59,17 +83,29 @@ namespace PizzaShopWebService.Pages
 
 		public IActionResult OnPost()
 		{
-			string data;
+			string order, payment, phoneNumber;
 
-			data = HttpContext.Session.GetString("PhoneNumber");
-
+			order = HttpContext.Session.GetString("Order");
+			payment = HttpContext.Session.GetString("PaymentDTO");
+			phoneNumber = HttpContext.Session.GetString("PhoneNumber");
 			
+			TransactionDTO transactionDTO = new TransactionDTO(
+				JsonSerializer.Deserialize<Order>(order),
+				_pizzaShopDbHandler.FindCustomer(phoneNumber),
+				(PaymentType)HttpContext.Session.GetInt32("PaymentType")
+			);
 
+			_pizzaShopDbHandler.AddTransaction(transactionDTO);
 
 			HttpContext.Session.Clear();
-			HttpContext.Session.SetString("PhoneNumber", data);
+			HttpContext.Session.SetString("PhoneNumber", phoneNumber);
+			HttpContext.Session.SetString("TransactionDTO", JsonSerializer.Serialize(transactionDTO));
+			
+			if (!string.IsNullOrEmpty(payment)) {
+				HttpContext.Session.SetString("PaymentDTO", payment);
+			}
 
-			return RedirectToPage("/Receipt");
+			return RedirectPermanent("/Receipt");
 		}
     }
 }

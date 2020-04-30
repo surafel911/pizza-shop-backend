@@ -1,8 +1,8 @@
-using System.Net;
+using System;
 using System.IO;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using PizzaShopWebService.Data;
 using PizzaShopWebService.Models;
@@ -19,20 +19,13 @@ namespace PizzaShopWebService.Services
 
 		private void AddEntity<T>(T entity)
 		{
-			StringBuilder contents;
-
 			_pizzaShopDbContext.Add(entity);
 			_pizzaShopDbContext.SaveChanges();
 
-			contents = new StringBuilder();
-
-			contents.AppendLine(JsonSerializer.Serialize(entity, new JsonSerializerOptions{
-    				WriteIndented = true,
-				}
-			));
-
 			File.AppendAllText(_configuration["FilePath"],
-				contents.ToString()
+				JsonSerializer.Serialize(entity, new JsonSerializerOptions{
+    				WriteIndented = true,
+				}) + Environment.NewLine
 			);		
 		}
 
@@ -46,50 +39,56 @@ namespace PizzaShopWebService.Services
 			}
 		}
 
-		public void AddManager(ManagerDTO manager)
+		public void AddManager(ManagerDTO managerDTO)
 		{
-			AddEntity(manager);
+			AddEntity(managerDTO);
 		}
 
-		public void AddEmployee(EmployeeDTO employee)
+		public void AddEmployee(EmployeeDTO employeeDTO)
 		{
-			AddEntity(employee);
+			AddEntity(employeeDTO);
 		}
 
-		public void AddCustomer(CustomerDTO customer)
+		public void AddCustomer(CustomerDTO customerDTO)
 		{
-			AddEntity(customer);
+			AddEntity(customerDTO);
 		}
 
-		public void AddTransaction(TransactionDTO transaction)
+		public void AddTransaction(TransactionDTO transactionDTO)
 		{
-			AddEntity(transaction);
+			AddEntity(transactionDTO);
+		}
+
+		public void UpdateCustomer(CustomerDTO customerDTO)
+		{
+			_pizzaShopDbContext.Customers.Update(customerDTO);
+			_pizzaShopDbContext.SaveChanges();
 		}
 
 		public ManagerDTO FindManager(string phoneNumber)
 		{
-			ManagerDTO manager = null;
+			ManagerDTO managerDTO = null;
 
 			if (string.IsNullOrEmpty(phoneNumber)) {
-				return manager;
+				return managerDTO;
 			}
 
-			manager = _pizzaShopDbContext.Managers.Find(phoneNumber);
+			managerDTO = _pizzaShopDbContext.Managers.Find(phoneNumber);
 
-			return manager;
+			return managerDTO;
 		}
 
 		public EmployeeDTO FindEmployee(string phoneNumber)
 		{
-			EmployeeDTO employee = null;
+			EmployeeDTO employeeDTO = null;
 
 			if (string.IsNullOrEmpty(phoneNumber)) {
-				return employee;
+				return employeeDTO;
 			}
 
-			employee = _pizzaShopDbContext.Employees.Find(phoneNumber);
+			employeeDTO = _pizzaShopDbContext.Employees.Find(phoneNumber);
 
-			return employee;
+			return employeeDTO;
 		}
 
 		public CustomerDTO FindCustomer(string phoneNumber)
@@ -99,10 +98,15 @@ namespace PizzaShopWebService.Services
 			if (string.IsNullOrEmpty(phoneNumber)) {
 				return customer;
 			}
-
+			
 			customer = _pizzaShopDbContext.Customers.Find(phoneNumber);
 
 			return customer;
+		}
+
+		public Task<List<TransactionDTO>> GetTransactions()
+		{
+			return _pizzaShopDbContext.Transactions.ToListAsync();
 		}
     }
 }

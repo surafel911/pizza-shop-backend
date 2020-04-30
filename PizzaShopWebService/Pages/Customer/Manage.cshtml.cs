@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
 
 using PizzaShopWebService.Models;
 using PizzaShopWebService.Services;
@@ -11,7 +12,7 @@ namespace PizzaShopWebService.Pages.Customer
 		private readonly IPizzaShopDbHandler _pizzaShopDbHandler;
 
 		[BindProperty]
-        public CustomerDTO Customer { get; set; }
+        public CustomerDTO CustomerDTO { get; set; }
 
 		public string ErrorMessage { get; private set; }
 
@@ -20,22 +21,43 @@ namespace PizzaShopWebService.Pages.Customer
 			_pizzaShopDbHandler = pizzaShopDbHandler;
 		}
 
+		public IActionResult OnGet()
+		{
+			ViewData["Store"] = false;
+
+			string phoneNumber = HttpContext.Session.GetString("PhoneNumber");
+
+			if (string.IsNullOrEmpty(phoneNumber)) {
+				// TODO: Handle this condition better
+                return Content("Login required.");
+			}
+
+			CustomerDTO = _pizzaShopDbHandler.FindCustomer(phoneNumber);
+			if (CustomerDTO == null) {
+				// TODO: Handle this condition better
+				return Content("No customer account in this phone number.");
+			}
+
+			ViewData["Account"] = CustomerDTO.Name;
+
+			return Page();
+		}
+
 		public IActionResult OnPost()
 		{
+			string phoneNumber = HttpContext.Session.GetString("PhoneNumber");
+
+			ViewData["Store"] = false;
+			ViewData["Account"] = _pizzaShopDbHandler.FindCustomer(phoneNumber).Name;
+
 			if (!ModelState.IsValid) {
 				return Page();
 			}
+			
+			CustomerDTO.PhoneNumber = phoneNumber;
+			_pizzaShopDbHandler.UpdateCustomer(CustomerDTO);
 
-			if (_pizzaShopDbHandler.FindManager(Customer.PhoneNumber) != null ||
-				_pizzaShopDbHandler.FindEmployee(Customer.PhoneNumber) != null ||
-				_pizzaShopDbHandler.FindCustomer(Customer.PhoneNumber) != null) {
-				ErrorMessage = "This phone number is registered with another account. Please try a different phone number.";
-				return Page();
-			}
-
-			_pizzaShopDbHandler.AddCustomer(Customer);
-
-			return RedirectToPage("/Customer/Login");
+			return RedirectToPagePermanent("/Index");
 		}
 	}
 }

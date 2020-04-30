@@ -1,5 +1,5 @@
 ﻿@page
-@model Customer.LoginModel
+@model Store.LoginModel
 
 @{
 	ViewData["Title"] = "Customer Login";
@@ -11,6 +11,10 @@
 	</header>
 
 	<div class="col-lg-3 col-md-3"></div>
+
+	@if(!string.IsNullOrEmpty(Model.ErrorMessage)) {
+		<p>@Model.ErrorMessage</p>
+	}
 
 	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 		<form method="post">
@@ -30,11 +34,7 @@
 				<br />
 			</div>
 
-			<input asp-page="/Customer/Login" type="submit" value="Login" class="submit" />
-		</form>
-
-		<form method="get">
-			<input asp-page="/Customer/Signup" type="submit" value="Sign up" class="submit" />
+			<input asp-page="/Store/Login" type="submit" value="Login" class="submit" />
 		</form>
 </div>
 

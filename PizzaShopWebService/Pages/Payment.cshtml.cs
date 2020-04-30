@@ -18,10 +18,10 @@ namespace PizzaShopWebService.Pages
 
 		[Required]
 		[BindProperty]
-		public Payment Payment { get; set; }
+		public PaymentDTO PaymentDTO { get; set; }
 
 		[BindProperty]
-		public CustomerDTO Customer { get; set; }
+		public CustomerDTO CustomerDTO { get; set; }
 
 		public PaymentModel(IPizzaShopDbHandler pizzaShopDbHandler)
 		{
@@ -40,17 +40,21 @@ namespace PizzaShopWebService.Pages
 
 			// TODO: Handle conditions for employee and manager accounts.
 
-			Customer = _pizzaShopDbHandler.FindCustomer(phoneNumber);
-			if (Customer == null) {
+			CustomerDTO = _pizzaShopDbHandler.FindCustomer(phoneNumber);
+			if (CustomerDTO == null) {
 				// TODO: Handle this condition better
 				return Content("No customer account in this phone number.");
 			}
 
-			payment = HttpContext.Session.GetString("Payment");
-			Payment = (payment != null ? JsonSerializer.Deserialize<Payment>(payment) : new Payment());
+			ViewData["Store"] = false;
+			ViewData["Account"] = CustomerDTO.Name;
 
-			Payment.Name = Customer.Name;
-			Payment.PaymentType = Customer.PaymentType;
+			payment = HttpContext.Session.GetString("Payment");
+			PaymentDTO = (payment != null ? JsonSerializer.Deserialize<PaymentDTO>(payment) :
+				new PaymentDTO());
+
+			PaymentDTO.Name = CustomerDTO.Name;
+			PaymentDTO.PaymentType = CustomerDTO.PaymentType;
 
 			return Page();
         }
@@ -64,7 +68,7 @@ namespace PizzaShopWebService.Pages
 			// 	return Page();
 			// }
 
-			HttpContext.Session.SetString("Payment", JsonSerializer.Serialize(Payment));
+			HttpContext.Session.SetString("PaymentDTO", JsonSerializer.Serialize(PaymentDTO));
 
 			return RedirectToPage("/Confirmation");
 		}

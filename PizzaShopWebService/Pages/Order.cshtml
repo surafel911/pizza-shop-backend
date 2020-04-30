@@ -11,14 +11,14 @@
 
 			<div style="height: 200px; width:100%; border:1px solid lightgray; overflow-y:scroll">   
              <table style="width:100%; height:100px; overflow-y:scroll">
-				@foreach (Pizza pizza in @Model.Order.Items.Pizzas) {
+				@foreach (Pizza pizza in @Model.Order.ItemsDTO.Pizzas) {
 					<thead>
 						<tr>
 							<td style="width:80%; text-align:left">
 								<h4> @pizza.Size Pizza </h4>
 							</td>
 							<td style="width:20%; text-align:right;">
-								<h4> $@Model.Order.CalculatePizzaPrice(pizza) </h4>
+								<h4> $@PriceManager.CalculatePizzaPrice(pizza) </h4>
 							</td>
 						</tr>
 					</thead>
@@ -47,14 +47,14 @@
 					</tbody>
 				}
 
-				@foreach (Drink drink in @Model.Order.Items.Drinks) {
+				@foreach (Drink drink in @Model.Order.ItemsDTO.Drinks) {
 					<thead>
 						<tr>
 							<td style="width:80%; text-align:left">
 								<h4> @drink.Size @drink.Type </h4>
 							</td>
 							<td style="width:20%; text-align:right;">
-								<h4> $@Model.Order.CalculateDrinkPrice(drink) </h4>
+								<h4> $@PriceManager.CalculateDrinkPrice(drink) </h4>
 							</td>
 						</tr>
 					</thead>
@@ -81,9 +81,9 @@
 					<td style="width:80%; text-align:left">
 						<h4> Delivering Address </h4>
 						<p>
-							@Model.Customer.Address
+							@Model.CustomerDTO.Address
 							<br />
-							@Model.Customer.AddressDetails
+							@Model.CustomerDTO.AddressDetails
 						</p>
 					</td>
 					<td>
@@ -100,7 +100,7 @@
 						<h4> Delivery Fee </h4>
 					</td>
 					<td>
-						<h5> $@Model.Order.DeliveryFee </h5>
+						<h5> $@PriceManager.DeliveryFee </h5>
 					</td>
 				</tr>
 				<tr>
@@ -108,10 +108,14 @@
 						<h4> Pickup Type </h4>
 					</td>
 					<td>
-						<div class="form-group">
-							<select asp-for="Order.RetrievalType" asp-items="Html.GetEnumSelectList<RetrievalType>()" class="form-control"></select>
-							<span asp-validation-for="Order.RetrievalType" class="text-danger"></span>
-						</div>
+						<form id="formCheck" method="post" style="margin-top:20%;">
+							<div class="form-group">
+								<select asp-for="Order.RetrievalType" asp-items="Html.GetEnumSelectList<RetrievalType>()" class="form-control"></select>
+								<span asp-validation-for="Order.RetrievalType" class="text-danger"></span>
+							</div>
+
+							<input type="submit" asp-page="/Order" value="Continue" class="submit" style="width:59%" />
+						</form> 
 					</td>
 				</tr>
 			</table>
@@ -119,12 +123,6 @@
 	</div>
 
 	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:center; top:80px;  vertical-align:central">
-		<form id="formCheck" method="post" style="margin-top:20%;">
-			<input type="submit" asp-page="/Order" value="Continue" class="submit" style="width:59%" />
-		</form> 
-
-		<br />
-
 		<form id="formCheck" method="get" style="margin-top:20%;">
 			<input type="submit" asp-page="/Menu" value="Back" class="submit" style="width:59%" />
 		</form> 

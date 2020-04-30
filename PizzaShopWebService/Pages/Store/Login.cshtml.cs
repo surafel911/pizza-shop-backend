@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 using PizzaShopWebService.Models;
 using PizzaShopWebService.Services;
 
-namespace PizzaShopWebService.Pages.Customer
+namespace PizzaShopWebService.Pages.Store
 {
     public class LoginModel : PageModel   
     {
@@ -24,44 +24,37 @@ namespace PizzaShopWebService.Pages.Customer
 		[DataType(DataType.Password)]
 		public string Password { get; set; }
 
+		public string ErrorMessage { get; private set; }
+
 		public LoginModel(IPizzaShopDbHandler pizzaShopDbHandler)
 		{
 			_pizzaShopDbHandler = pizzaShopDbHandler;
 		}
 
-		public IActionResult OnGet()
+		public void OnGet()
 		{
-			ViewData["Store"] = false;
-
-			return Page();
+			ViewData["Store"] = true;
 		}
 
 		public IActionResult OnPost()
 		{
-			ViewData["Store"] = false;
-
 			if (!ModelState.IsValid) {
      			return Page();
     		}
 
 			CustomerDTO customerDTO = _pizzaShopDbHandler.FindCustomer(PhoneNumber);
-			if (customerDTO == null) {
-				return Content("This phone number isn't registered to an account. Please sign up.");
+			if (customerDTO != null) {
+				return Page();
 			}
 
-			EmployeeDTO employeeDTO = _pizzaShopDbHandler.FindEmployee(PhoneNumber);
-			if (employeeDTO != null) {
-				return Content("This phone number is registered with an employee account. Please use a differnet phone number.");
-			}
-
-			ManagerDTO managerDTO = _pizzaShopDbHandler.FindManager(PhoneNumber);
-			if (managerDTO != null) {
-				return Content("This phone number is registered with a manager account. Please use a differnet phone number.");
+			if (_pizzaShopDbHandler.FindManager(PhoneNumber) == null &&
+				_pizzaShopDbHandler.FindEmployee(PhoneNumber) == null) {
+				return Content("This phone number isn't associated with any employee or manager account.");
 			}
 
 			HttpContext.Session.SetString("PhoneNumber", PhoneNumber);
 
-			return RedirectToPage("/Index");
+			return RedirectToPage("/Store/Transactions");
 		}
     }
 }

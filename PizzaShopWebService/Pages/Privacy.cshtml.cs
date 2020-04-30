@@ -11,6 +11,7 @@ namespace PizzaShopWebService.Pages
     {
         public void OnGet()
         {
+			ViewData["Account"] = string.Empty;
         }
     }
 }

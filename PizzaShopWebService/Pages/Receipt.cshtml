@@ -1,293 +1,263 @@
 ﻿@page
 @model ReceiptModel
+@using PizzaShopWebService.Models
+
 @{
+	ViewData["Title"] = "Receipt";
 }
 
 
 <div class="row">
+	<header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<h3>
+			Transaction Complete
+		</h3>
+	</header>
 
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+		<div style="border:1px solid lightgray;width:100%; height:450px; overflow-y:scroll; padding-top:0%">
+			<table>
+				<thead>
+					<tr>
+						<td>
+							<h3>
+								<b> Pizza Shop </b>
+							</h3>
 
-    <header class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <h3>
-            Transaction Complete
-        </h3>
-    </header>
+							<h5>
 
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-        <div style="border:1px solid lightgray;width:100%; height:450px; overflow-y:scroll; padding-top:0%">
-            <table>
-                <thead>
-                    <tr>
-                        <td>
-                            <h3>
-                                <b>
-                                    Pizza Shop
-                                </b>
-                            </h3>
-                            <h5>
+								8888 Peachtree steeat NE
+								<br />
+								Atlanta, GA , 303333 <br />
+								(555) 555 5555
+							</h5>
+						</td>
+					</tr>
+				</thead>
 
-                                8888 Peachtree steeat NE
-                                <br />
-                                Atlanta, GA , 303333 <br />
-                                (555) 555 5555
-                            </h5>
-                        </td>
-                    </tr>
-                </thead>
+				<br /> 
 
-                <tbody>
-                    <tr>
-                        <td style="width:50%; text-align:left">
-                            <h4>
-                                <b>
-                                    PURCHASE
-                                </b>
-                            </h4>
-                        </td>
-                        <td style="width:50%; text-align:left;">
-                            7:55 PM
-                        </td>
-                    </tr>
-                    <tr>
+				<tbody>
+					<tr>
+						<td style="width:50%; text-align:center;">
+							@Model.TransactionDTO.Date
+						</td>
+					</tr>
+					
+					<br /> 
 
-                        <td style="width:80%; text-align:left">
-                            <h4>
-                                <b>
-                                    Ex -Large - Beff
-                                </b>
-                            </h4>
-                        </td>
-                        <td style="width:20%">
-                            <b>
-                                $.18.99
-                            </b>
+					@foreach (Pizza pizza in @Model.ItemsDTO.Pizzas) {
+						<tr>
+							<td style="width:80%; text-align:left">
+								<h4>
+									<b> @pizza.Size Pizza </b>
+								</h4>
+							</td>
+						</tr>
 
-                        </td>
+						<tr>
+							<td style="text-align:left">
+								<p> @pizza.Crust Crust </p>
+							</td>
+						</tr>
 
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; padding-left:10px">tomato</td>
-                        <td>$ 0.00</td>
-                    </tr>
+						@foreach (PizzaTopping topping in pizza.Toppings) {							
+							<tr>
+								<td style="text-align:left; padding-left:20px">
+									<p> @topping </p>
+								</td>
+							</tr>
+						}
 
-                    <tr>
+						@foreach (PizzaExtra extra in pizza.Extras) {							
+							<tr>
+								<td style="text-align:left; padding-left:20px">
+									<p> @extra </p>
+								</td>
+							</tr>
+						}
+					}
 
-                        <td style="width:80%; text-align:left">
-                            <h4>
-                                <b>
-                                    Md- Cheese Pizza
-                                </b>
-                            </h4>
-                        </td>
-                        <td style="width:20%">
-                            <b>
-                                $.13.99
-                            </b>
+					@foreach (Drink drink in @Model.ItemsDTO.Drinks) {
+						<tr>
+							<td style="width:80%; text-align:left">
+								<h4>
+									<b> @drink.Size @drink.Type </b>
+								</h4>
+							</td>
+						</tr>
+					}
 
-                        </td>
+					@if (@Model.TransactionDTO.RetrievalType == RetrievalType.Delivery) {
+						<tr>
+							<td style="text-align:left; padding-left:0px">
+								<h4>
+									<b> Delivery </b>
+								</h4>
+							</td>
+							<td>
+								<b> $@PriceManager.DeliveryFee </b>
+							</td>
+						</tr>
+					}
 
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; padding-left:10px">garlic</td>
-                        <td>$ 0.00</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; padding-left:10px">pineaple</td>
-                        <td>$ 0.99</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; padding-left:0px">
-                            <h4>
-                                <b>
-                                    delevery
-                                </b>
-                            </h4>
-                        </td>
-                        <td>
-                            <b>
-                                $ 8.00
+					<br /> <br /> 
 
-                            </b>
-                        </td>
-                    </tr>
+					<tr>
+						<td style="text-align:left; padding-left:0px">
+							<h4>
+								<b> Total  </b>
+							</h4>
+						</td>
+						<td>
+							<b> $@PriceManager.CalculateOrderPrice(new Order(@Model.ItemsDTO, @Model.TransactionDTO.RetrievalType)) </b>
+						</td>
+					</tr>
 
-                    <tr>
-                        <td style="text-align:left; padding-left:0px">
-                            <h4>
-                                <b>
-                                    Total
-                                </b>
-                            </h4>
-                        </td>
-                        <td>
-                            <b>
-                                $46.59
+					<tr>
+						<td>
+							<p> @Model.CustomerDTO.Name </p>
+								@if (@Model.CardUsed) {
+									<p> @Model.TransactionDTO.PaymentType ****-****-****-@Model.LastFourOfCardNumber </p>
+								} else {
+									<p> @Model.TransactionDTO.PaymentType </p>
+								}
+						</td>
+					</tr>
+				</tbody>
 
-                            </b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Absedersfs V TEsmes <br />
-                            0000   *****5555<br />
-                            VISA
+				<br /> <br /> <br />
 
-                        </td>
-                        <td>
-                            $5555
-                        </td>
-                    </tr>
-                </tbody>
+				<tfoot>
+					@if (@Model.TransactionDTO.RetrievalType == RetrievalType.Delivery) {
+						<tr>
+							<td style="width:80%; text-align:left">
+								<h5>
+									<b> Deliver to </b>
+								</h5>
 
-                <tfoot>
+								<p>
+									@Model.CustomerDTO.Name
+									@Model.CustomerDTO.Address
+									@Model.CustomerDTO.AddressDetails
+								</p>
+							</td>
+						</tr>
 
+						<br />
+					}
+					
+					<tr>
+						<td>
+							<h3> Custmer Copy </h3>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
 
-                    <tr>
-                        <td style="width:80%; text-align:left">
-                            <h5>
-                                <b>
-                                    delever to
-                                </b>
+	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:center; top:80px;  vertical-align:central">
+		<form id="formCheck" method="get" style="margin-top:20%;">
 
-                            </h5>
-                            <p>
-                                44ttt peahtree rod
-                                smaple addre Apt #8<br />
-                                4040 atlant GA<br />
-                                666 666 66666
+			<input type="submit" asp-asp-page-handler="ReturnToIndexPage" value="Click to Print the Receipt" class="submit" style="width:59%" />
 
-                            </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h3>
-                                Custmer Copy
-                            </h3>
-                        </td>
+			<br /> <br />
 
-                    </tr>
-                </tfoot>
-
-            </table>
-
-
-
-
-
-
-        </div>
-
-
-    </div>
-   
-
-    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="text-align:center; top:80px;  vertical-align:central">
-        <form id="formCheck" method="post" style="margin-top:20%;">
-            <input type="submit" asp-page="/Recept" value="Click to Print the Receipt" class="submit" style="width:59%" /> <br /> <br />
-           
-            @*<input type="submit" asp-page="/NewPayment" value="go back" class="submit" style="width:59%" /> <br /> <br />*@
-
-        </form>
-    </div>
-
-
-
-
-
-
-
-
+			<input type="submit" asp-page="/Index" value="Back to Homepage" class="submit" style="width:59%" />
+		</form>
+	</div>
 </div>
 
 <style>
-    .row {
-        margin: 0%;
-        padding: 0%;
-        height: 650px;
-        width: 100%;
-        border: 1px solid lightgray;
-      
-        background-color: white;
-        /*border: 1px solid lightgray;
-        -moz-box-shadow: 2px 2px 2px 2px darkblue;
-        -webkit-box-shadow: 2px 2px 2px 2px darkblue;
-        box-shadow: 0px 0px 10px 0px gray;*/
-    }
+	.row {
+		margin: 0%;
+		padding: 0%;
+		height: 650px;
+		width: 100%;
+		border: 1px solid lightgray;
+		
+		background-color: white;
+		/*border: 1px solid lightgray;
+		-moz-box-shadow: 2px 2px 2px 2px darkblue;
+		-webkit-box-shadow: 2px 2px 2px 2px darkblue;
+		box-shadow: 0px 0px 10px 0px gray;*/
+	}
 
-    header {
-        height: 60px;
-        border-bottom: 1px solid lightgray;
-        /*background-color: #febc11;*/
-        font-weight: bold;
-    }
+	header {
+		height: 60px;
+		border-bottom: 1px solid lightgray;
+		/*background-color: #febc11;*/
+		font-weight: bold;
+	}
 
-    footer {
-        height: 60px;
-        border-top: 1px solid lightgray;
-    }
+	footer {
+		height: 60px;
+		border-top: 1px solid lightgray;
+	}
 
-        footer h3 {
-            float: right;
-            margin-right: 40px;
-        }
+	footer h3 {
+		float: right;
+		margin-right: 40px;
+	}
 
-    h3 {
-        text-align: center;
-        text-transform: capitalize;
-    }
+	h3 {
+		text-align: center;
+		text-transform: capitalize;
+	}
 
-    .row div {
-        margin: 0%;
-        /*border: 1px solid lightgray;*/
-        vertical-align: central;
-        display: inline-block;
-        padding: 5%;
-    }
+	.row div {
+		margin: 0%;
+		/*border: 1px solid lightgray;*/
+		vertical-align: central;
+		display: inline-block;
+		padding: 5%;
+	}
 
-    input {
-        height: 50px;
-        width: 100%;
-        padding-left: 5%;
-        padding-right: 5%;
-        border: 1px solid lightgray;
-    }
+	input {
+		height: 50px;
+		width: 100%;
+		padding-left: 5%;
+		padding-right: 5%;
+		border: 1px solid lightgray;
+	}
 
-    form {
-        padding: 0%;
-        width: 100%;
-    }
+	form {
+		padding: 0%;
+		width: 100%;
+	}
 
-    .submit {
-        background-color: black;
-        color: #febc11;
-        font-weight: bold;
-        width: 49%;
-        margin: 0%;
-        display: inline;
-    }
+	.submit {
+		background-color: black;
+		color: #febc11;
+		font-weight: bold;
+		width: 49%;
+		margin: 0%;
+		display: inline;
+	}
 
-    #formCheck input {
-        width: 100%;
-    }
+	#formCheck input {
+		width: 100%;
+	}
 
-    h4 {
-        text-transform: uppercase;
-    }
+	h4 {
+		text-transform: uppercase;
+	}
 
-    table {
-        width: 100%;
-    }
+	table {
+		width: 100%;
+	}
 
-    thead {
-        text-align: center;
-    }
+	thead {
+		text-align: center;
+	}
 
-    tbody {
-        text-align: left;
-    }
-    h3, h5{
-        text-transform:capitalize;
-    }
+	tbody {
+		text-align: left;
+	}
+
+	h3, h5{
+		text-transform:capitalize;
+	}
 </style>
 

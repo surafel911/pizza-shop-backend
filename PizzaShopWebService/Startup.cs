@@ -74,14 +74,46 @@ namespace PizzaShopWebService
 			IPizzaShopDbHandler pizzaShopDbHandler = app.ApplicationServices.CreateScope()
 					.ServiceProvider.GetRequiredService<IPizzaShopDbHandler>();
 
-				pizzaShopDbHandler.AddCustomer(new Customer
-					{
-						PhoneNumber = "1111111111",
-						Password = "password",
-						Name = "Mona ",
-						Address = "1600 Pennsylvania Ave NW, Washington, DC 20500",
-						PaymentType = PaymentType.VisaCard,
-					});
+			pizzaShopDbHandler.AddCustomer(new CustomerDTO
+				{
+					PhoneNumber = "1111111111",
+					Password = "password",
+					Name = "Mona Chavoshi",
+					Address = "1600 Pennsylvania Ave NW, Washington, DC 20500",
+					AddressDetails = "The big house.",
+					PaymentType = PaymentType.VisaCard,
+				});
+
+			pizzaShopDbHandler.AddManager(new ManagerDTO
+				{
+					PhoneNumber = "2222222222",
+					Password = "password",
+					Name = "Surafel Assefa",
+				});
+
+
+			CustomerDTO stephen = new CustomerDTO
+				{
+					PhoneNumber = "3333333333",
+					Password = "password",
+					Name = "Stephen",
+					Address = "egaegesfgaesgeas",
+					AddressDetails = "esagsegesagesg.",
+					PaymentType = PaymentType.Cash,
+				};
+				
+			pizzaShopDbHandler.AddCustomer(stephen);
+			
+			pizzaShopDbHandler.AddTransaction(new TransactionDTO
+			{
+				CustomerPhoneNumber = "3333333333",
+				Date = DateTime.Now,
+				Total = 20M,
+				PaymentType = PaymentType.Cash,
+				RetrievalType = RetrievalType.Carryout,
+				CustomerDTO = stephen,
+				ItemsJson = string.Empty
+			});
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();

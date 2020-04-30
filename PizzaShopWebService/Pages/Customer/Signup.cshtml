@@ -1,5 +1,5 @@
 ﻿@page
-@model SignupModel
+@model Customer.SignupModel
 @using PizzaShopWebService.Models
 
 @{
@@ -23,35 +23,35 @@
 		<form method="post" style="margin-top:25%;">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
-				<label asp-for="Customer.PhoneNumber" class="control-label"></label>
-				<input asp-for="Customer.PhoneNumber" class="form-control" />
-				<span asp-validation-for="Customer.PhoneNumber" class="text-danger"></span>
+				<label asp-for="CustomerDTO.PhoneNumber" class="control-label"></label>
+				<input asp-for="CustomerDTO.PhoneNumber" class="form-control" />
+				<span asp-validation-for="CustomerDTO.PhoneNumber" class="text-danger"></span>
 				<br /><br />
 				
-				<label asp-for="Customer.Password" class="control-label"></label>
-				<input asp-for="Customer.Password" class="form-control" />
-				<span asp-validation-for="Customer.Password" class="text-danger"></span>
+				<label asp-for="CustomerDTO.Password" class="control-label"></label>
+				<input asp-for="CustomerDTO.Password" class="form-control" />
+				<span asp-validation-for="CustomerDTO.Password" class="text-danger"></span>
 				<br /><br />
 				
-				<label asp-for="Customer.Name" class="control-label"></label>
-				<input asp-for="Customer.Name" class="form-control" />
-				<span asp-validation-for="Customer.Name" class="text-danger"></span>
+				<label asp-for="CustomerDTO.Name" class="control-label"></label>
+				<input asp-for="CustomerDTO.Name" class="form-control" />
+				<span asp-validation-for="CustomerDTO.Name" class="text-danger"></span>
 				<br /><br />
 				
-				<label asp-for="Customer.Address" class="control-label"></label>
-				<input asp-for="Customer.Address" class="form-control" />
-				<span asp-validation-for="Customer.Address" class="text-danger"></span>
+				<label asp-for="CustomerDTO.Address" class="control-label"></label>
+				<input asp-for="CustomerDTO.Address" class="form-control" />
+				<span asp-validation-for="CustomerDTO.Address" class="text-danger"></span>
 				<br /><br />
 				
-				<label asp-for="Customer.PaymentType" class="control-label"></label>
-				<select asp-for="Customer.PaymentType" asp-items="Html.GetEnumSelectList<PaymentType>()"
+				<label asp-for="CustomerDTO.PaymentType" class="control-label"></label>
+				<select asp-for="CustomerDTO.PaymentType" asp-items="Html.GetEnumSelectList<PaymentType>()"
 					class="form-control"></select> 
-				<span asp-validation-for="Customer.PaymentType" class="text-danger"></span>
+				<span asp-validation-for="CustomerDTO.PaymentType" class="text-danger"></span>
 				<br /><br />
 				
-				<label asp-for="Customer.AddressDetails" class="control-label"></label>
-				<input asp-for="Customer.AddressDetails" class="form-control" />
-				<span asp-validation-for="Customer.AddressDetails" class="text-danger"></span>
+				<label asp-for="CustomerDTO.AddressDetails" class="control-label"></label>
+				<input asp-for="CustomerDTO.AddressDetails" class="form-control" />
+				<span asp-validation-for="CustomerDTO.AddressDetails" class="text-danger"></span>
 				<br /><br />
 			</div>
 

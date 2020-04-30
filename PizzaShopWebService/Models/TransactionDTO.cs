@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -36,6 +37,21 @@ namespace PizzaShopWebService.Models
 		public string ItemsJson { get; set; }
 
 		// Navagation properties
-		public CustomerDTO Customer;
+		public CustomerDTO CustomerDTO;
+
+		public TransactionDTO()
+		{
+		}
+
+		public TransactionDTO(Order order, CustomerDTO customerDTO, PaymentType paymentType)
+		{
+			CustomerPhoneNumber = customerDTO.PhoneNumber;
+			Date = DateTime.Now;
+			PaymentType = paymentType;
+			Total = order.Total;
+			RetrievalType = order.RetrievalType;
+			ItemsJson = JsonSerializer.Serialize(order.ItemsDTO);
+			CustomerDTO = customerDTO;
+		}
 	}
 }

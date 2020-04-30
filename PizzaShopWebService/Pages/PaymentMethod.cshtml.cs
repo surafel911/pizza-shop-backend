@@ -37,6 +37,9 @@ namespace PizzaShopWebService.Pages
             }
 
             PaymentType = customer.PaymentType;
+			
+			ViewData["Store"] = false;
+			ViewData["Account"] = customer.Name;
 
             return Page();
         }
