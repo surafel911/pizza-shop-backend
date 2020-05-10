@@ -1,5 +1,7 @@
 ''piza-shop-webservice''
 
+The archive for the pizza shop webservice for SWE 3313. Utilizes ASP.NET Razor pages with EF and SQL for the ORM and database.
+
 Since this is an ASP.NET project, it is impossible to simply run it as an executable. Attempt to run the project
 using the provided `run-project.ps1` script.
 
